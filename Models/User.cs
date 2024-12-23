@@ -38,5 +38,7 @@ namespace Grupp14_CV.Models
         public virtual IEnumerable<Message> messages { get; set; } = new List<Message>();
 
         public virtual IEnumerable<Users_In_Project> UsersInProject { get; set; } = new List<Users_In_Project>();
+
+        //public virtual IEnumerable<User> MessagesUsers { get; set; } = new List<User>();
     }
 }

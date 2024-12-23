@@ -17,9 +17,9 @@ namespace Grupp14_CV.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Message>().
-                HasKey(m => new { m.SendUser, m.ReceiveUser });
+                HasKey(m => new { m.SenderID, m.ReceiverID });
             modelBuilder.Entity<Users_In_Project>().
-                HasKey(uip => new { uip.User, uip.Project });
+                HasKey(uip => new { uip.UserID, uip.ProjectID });
 
             modelBuilder.Entity<CV>().HasData(
                 new CV
