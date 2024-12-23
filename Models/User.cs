@@ -35,7 +35,8 @@ namespace Grupp14_CV.Models
         [ForeignKey(nameof(CVID))]
         public virtual CV CV { get; set; }
 
+        public virtual IEnumerable<Message> messages { get; set; } = new List<Message>();
 
-
+        public virtual IEnumerable<Users_In_Project> UsersInProject { get; set; } = new List<Users_In_Project>();
     }
 }

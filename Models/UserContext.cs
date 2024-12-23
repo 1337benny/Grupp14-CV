@@ -16,6 +16,11 @@ namespace Grupp14_CV.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Message>().
+                HasKey(m => new { m.SendUser, m.ReceiveUser });
+            modelBuilder.Entity<Users_In_Project>().
+                HasKey(uip => new { uip.User, uip.Project });
+
             modelBuilder.Entity<CV>().HasData(
                 new CV
                 {
@@ -122,7 +127,7 @@ namespace Grupp14_CV.Models
                 {
                     SenderID = 1,
                     ReceiverID = 2,
-                    MessageID = 1,
+                    //MessageID = 1,
                     Content = "Hej, vgd?"
                 }
                 );
