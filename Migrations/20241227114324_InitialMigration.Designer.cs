@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Grupp14_CV.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20241227100629_InitialMigration")]
+    [Migration("20241227114324_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -185,7 +185,7 @@ namespace Grupp14_CV.Migrations
                     b.Property<DateOnly>("BirthDay")
                         .HasColumnType("date");
 
-                    b.Property<int>("CVID")
+                    b.Property<int?>("CVID")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -243,7 +243,8 @@ namespace Grupp14_CV.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CVID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CVID] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -268,13 +269,13 @@ namespace Grupp14_CV.Migrations
                     b.HasOne("Grupp14_CV.Models.User", "ReceiveUser")
                         .WithMany("RecievedMessages")
                         .HasForeignKey("ReceiverID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Grupp14_CV.Models.User", "SendUser")
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ReceiveUser");
@@ -287,7 +288,7 @@ namespace Grupp14_CV.Migrations
                     b.HasOne("Grupp14_CV.Models.User", "user")
                         .WithMany("Projects")
                         .HasForeignKey("CreatorID")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("user");
@@ -298,8 +299,7 @@ namespace Grupp14_CV.Migrations
                     b.HasOne("Grupp14_CV.Models.CV", "CV")
                         .WithOne("Users")
                         .HasForeignKey("Grupp14_CV.Models.User", "CVID")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("CV");
                 });
@@ -309,13 +309,13 @@ namespace Grupp14_CV.Migrations
                     b.HasOne("Grupp14_CV.Models.Project", "Project")
                         .WithMany("UsersInProject")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Grupp14_CV.Models.User", "User")
                         .WithMany("UsersInProject")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");

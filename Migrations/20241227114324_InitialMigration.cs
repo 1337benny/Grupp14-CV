@@ -39,7 +39,7 @@ namespace Grupp14_CV.Migrations
                     Lastname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PublicSetting = table.Column<bool>(type: "bit", nullable: false),
                     BirthDay = table.Column<DateOnly>(type: "date", nullable: false),
-                    CVID = table.Column<int>(type: "int", nullable: false),
+                    CVID = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -84,14 +84,12 @@ namespace Grupp14_CV.Migrations
                         name: "FK_Messages_Users_ReceiverID",
                         column: x => x.ReceiverID,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Messages_Users_SenderID",
                         column: x => x.SenderID,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -114,7 +112,7 @@ namespace Grupp14_CV.Migrations
                         column: x => x.CreatorID,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,14 +129,12 @@ namespace Grupp14_CV.Migrations
                         name: "FK_Users_In_Projects_Projects_ProjectID",
                         column: x => x.ProjectID,
                         principalTable: "Projects",
-                        principalColumn: "ProjectID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ProjectID");
                     table.ForeignKey(
                         name: "FK_Users_In_Projects_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -167,7 +163,8 @@ namespace Grupp14_CV.Migrations
                 name: "IX_Users_CVID",
                 table: "Users",
                 column: "CVID",
-                unique: true);
+                unique: true,
+                filter: "[CVID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_In_Projects_ProjectID",

@@ -30,7 +30,7 @@ namespace Grupp14_CV.Models
         public DateOnly BirthDay { get; set; }
 
 
-        public int CVID { get; set; }
+        public int? CVID { get; set; }
 
         [ForeignKey(nameof(CVID))]
         public CV CV { get; set; }

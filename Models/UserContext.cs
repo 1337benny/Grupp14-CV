@@ -34,31 +34,31 @@ namespace Grupp14_CV.Models
             modelBuilder.Entity<User>()
                 .HasMany(p => p.Projects)
                 .WithOne(u => u.user)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Message>()
                  .HasOne(m => m.SendUser)
                  .WithMany(u => u.SentMessages)
                  .HasForeignKey(m => m.SenderID)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.ReceiveUser)
                 .WithMany(u => u.RecievedMessages)
                 .HasForeignKey(m => m.ReceiverID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Users_In_Project>()
                 .HasOne(uip => uip.User)
                 .WithMany(user => user.UsersInProject)
                 .HasForeignKey(uip => uip.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Users_In_Project>()
                 .HasOne(uip => uip.Project)
                 .WithMany(project => project.UsersInProject)
                 .HasForeignKey(uip => uip.ProjectID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CV>().HasData(
                 new CV
