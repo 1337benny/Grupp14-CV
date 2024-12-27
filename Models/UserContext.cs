@@ -18,8 +18,47 @@ namespace Grupp14_CV.Models
 
             modelBuilder.Entity<Message>().
                 HasKey(m => new { m.SenderID, m.ReceiverID });
+
             modelBuilder.Entity<Users_In_Project>().
                 HasKey(uip => new { uip.UserID, uip.ProjectID });
+
+            //modelBuilder.Entity<CV>().HasOne(p => p.Users)
+            //    .WithOne(p => p.CVID)
+
+            modelBuilder.Entity<CV>()
+                .HasOne(cv => cv.Users)
+                .WithOne(user => user.CV)
+                .HasForeignKey<User>(user => user.CVID)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Projects)
+                .WithOne(u => u.user)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Message>()
+                 .HasOne(m => m.SendUser)
+                 .WithMany(u => u.SentMessages)
+                 .HasForeignKey(m => m.SenderID)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.ReceiveUser)
+                .WithMany(u => u.RecievedMessages)
+                .HasForeignKey(m => m.ReceiverID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Users_In_Project>()
+                .HasOne(uip => uip.User)
+                .WithMany(user => user.UsersInProject)
+                .HasForeignKey(uip => uip.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Users_In_Project>()
+                .HasOne(uip => uip.Project)
+                .WithMany(project => project.UsersInProject)
+                .HasForeignKey(uip => uip.ProjectID)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CV>().HasData(
                 new CV
@@ -74,6 +113,7 @@ namespace Grupp14_CV.Models
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
+                    
                     Firstname = "Johan",
                     Lastname = "Rosenkvist",
                     CVID = 1,

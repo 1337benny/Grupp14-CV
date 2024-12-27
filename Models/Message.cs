@@ -7,13 +7,15 @@ namespace Grupp14_CV.Models
     public class Message
     {
         public Message() { }
-        
-        public int SenderID { get; set; }
-        
-        public int ReceiverID { get; set; }
 
-        //[Key]
-        //public int MessageID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MessageID { get; set; }
+
+        public string SenderID { get; set; }
+        
+        public string ReceiverID { get; set; }
+        
 
         [Required]
         [StringLength(500)]
