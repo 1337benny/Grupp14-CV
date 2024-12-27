@@ -110,106 +110,106 @@ namespace Grupp14_CV.Models
 
                 );
 
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
+            //modelBuilder.Entity<User>().HasData(
+            //    new User
+            //    {
                     
-                    Firstname = "Johan",
-                    Lastname = "Rosenkvist",
-                    CVID = 1,
-                    PasswordHash = "losenord",
-                    Email = "johan@example.com",
-                    BirthDay = new DateOnly(2001, 03, 14)
-                },
-                new User
-                {
-                    Firstname = "Anton",
-                    Lastname = "Kraft",
-                    CVID = 2,
-                    PasswordHash = "losenord",
-                    Email = "anton@example.com",
-                    BirthDay = new DateOnly(1995, 04, 02)
-                },
-                new User
-                {
-                    Firstname = "William",
-                    Lastname = "Lagerqvist",
-                    CVID = 3,
-                    PasswordHash = "losenord",
-                    Email = "william@example.com",
-                    BirthDay = new DateOnly(2000, 06, 06)
-                },
-                new User
-                {
-                    Firstname = "Oskar",
-                    Lastname = "Prenkert",
-                    CVID = 4,
-                    PasswordHash = "losenord",
-                    Email = "oskar@example.com",
-                    BirthDay = new DateOnly(1999, 07, 15)
-                },
-                new User
-                {
-                    Firstname = "Oliver",
-                    Lastname = "Edvinson",
-                    CVID = 5,
-                    PasswordHash = "losenord",
-                    Email = "oliver@example.com",
-                    BirthDay = new DateOnly(2001, 06, 10)
-                }
+            //        Firstname = "Johan",
+            //        Lastname = "Rosenkvist",
+            //        CVID = 1,
+            //        PasswordHash = "losenord",
+            //        Email = "johan@example.com",
+            //        BirthDay = new DateOnly(2001, 03, 14)
+            //    },
+            //    new User
+            //    {
+            //        Firstname = "Anton",
+            //        Lastname = "Kraft",
+            //        CVID = 2,
+            //        PasswordHash = "losenord",
+            //        Email = "anton@example.com",
+            //        BirthDay = new DateOnly(1995, 04, 02)
+            //    },
+            //    new User
+            //    {
+            //        Firstname = "William",
+            //        Lastname = "Lagerqvist",
+            //        CVID = 3,
+            //        PasswordHash = "losenord",
+            //        Email = "william@example.com",
+            //        BirthDay = new DateOnly(2000, 06, 06)
+            //    },
+            //    new User
+            //    {
+            //        Firstname = "Oskar",
+            //        Lastname = "Prenkert",
+            //        CVID = 4,
+            //        PasswordHash = "losenord",
+            //        Email = "oskar@example.com",
+            //        BirthDay = new DateOnly(1999, 07, 15)
+            //    },
+            //    new User
+            //    {
+            //        Firstname = "Oliver",
+            //        Lastname = "Edvinson",
+            //        CVID = 5,
+            //        PasswordHash = "losenord",
+            //        Email = "oliver@example.com",
+            //        BirthDay = new DateOnly(2001, 06, 10)
+            //    }
 
-                );
+            //    );
 
 
             
-            modelBuilder.Entity<Message>().HasData(
-                new Message
-                {
-                    SenderID = 1,
-                    ReceiverID = 2,
-                    //MessageID = 1,
-                    Content = "Hej, vgd?"
-                }
-                );
+            //modelBuilder.Entity<Message>().HasData(
+            //    new Message
+            //    {
+            //        SenderID = 1,
+            //        ReceiverID = 2,
+            //        //MessageID = 1,
+            //        Content = "Hej, vgd?"
+            //    }
+            //    );
 
-            modelBuilder.Entity<Project>().HasData(
-                new Project
-                {
-                    ProjectID = 1,
-                    Titel = "Ny hemisda till Elgiganten",
-                    Description = "HTML, CSS, JS, SQL. Fullstack development för kunden Elgiganten.",
-                    StartDate = new DateOnly(2024, 10, 10),
-                    CreatorID = 1,
-                }
-                );
-            modelBuilder.Entity<Users_In_Project>().HasData(
-                new Users_In_Project
-                {
-                    ProjectID = 1,
-                    UserID = 1
-                },
-                new Users_In_Project
-                {
-                    ProjectID = 1,
-                    UserID = 2
-                },
-                new Users_In_Project
-                {
-                    ProjectID = 1,
-                    UserID = 3
-                },
-                new Users_In_Project
-                {
-                    ProjectID = 1,
-                    UserID = 4
-                },
-                new Users_In_Project
-                {
-                    ProjectID = 1,
-                    UserID = 5
-                }
+            //modelBuilder.Entity<Project>().HasData(
+            //    new Project
+            //    {
+            //        ProjectID = 1,
+            //        Titel = "Ny hemisda till Elgiganten",
+            //        Description = "HTML, CSS, JS, SQL. Fullstack development för kunden Elgiganten.",
+            //        StartDate = new DateOnly(2024, 10, 10),
+            //        CreatorID = 1,
+            //    }
+            //    );
+            //modelBuilder.Entity<Users_In_Project>().HasData(
+            //    new Users_In_Project
+            //    {
+            //        ProjectID = 1,
+            //        UserID = 1
+            //    },
+            //    new Users_In_Project
+            //    {
+            //        ProjectID = 1,
+            //        UserID = 2
+            //    },
+            //    new Users_In_Project
+            //    {
+            //        ProjectID = 1,
+            //        UserID = 3
+            //    },
+            //    new Users_In_Project
+            //    {
+            //        ProjectID = 1,
+            //        UserID = 4
+            //    },
+            //    new Users_In_Project
+            //    {
+            //        ProjectID = 1,
+            //        UserID = 5
+            //    }
 
-                );
+            //    );
         }
     }
 }

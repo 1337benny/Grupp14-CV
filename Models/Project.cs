@@ -33,7 +33,7 @@ namespace Grupp14_CV.Models
 
 
         [Required]
-        public int CreatorID { get; set; }
+        public string CreatorID { get; set; }
 
 
         

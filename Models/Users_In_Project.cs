@@ -8,7 +8,7 @@ namespace Grupp14_CV.Models
 
         public int ProjectID { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
 
         [ForeignKey(nameof(ProjectID))]
         public virtual Project Project { get; set; }
