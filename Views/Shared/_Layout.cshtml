@@ -53,6 +53,12 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Grupp14_CV - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            
+            <form method="post" asp-controller="Account" asp-action="Logout">
+                <h4>Du är inloggad som @User.Identity.Name</h4>
+                    <input type="submit" value="Logga ut" />
+                
+            </form>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

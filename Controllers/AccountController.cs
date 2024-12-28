@@ -60,7 +60,9 @@ namespace Grupp14_CV.Controllers
                     Email = registerViewModel.Epost,
                     Firstname = registerViewModel.Fornamn,
                     Lastname = registerViewModel.Efternamn,
-                    BirthDay = registerViewModel.FodelseDatum
+                    BirthDay = registerViewModel.FodelseDatum,
+                    UserName = registerViewModel.Epost,
+                    EmailConfirmed = false
                 };
 
                 var result = await userManager.CreateAsync(anvandare, registerViewModel.Losenord);
@@ -102,7 +104,22 @@ namespace Grupp14_CV.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(LoginViewModel loginViewModel)
         {
-            //Massor med kod och kontroll. Finns exempel i birdreport
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(
+                loginViewModel.Epost,
+                loginViewModel.Losenord,
+                isPersistent: loginViewModel.RememberMe,
+                lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Fel användarnam/lösenord.");
+                }
+            }
             return View(loginViewModel);
         }
 

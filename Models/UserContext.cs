@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Grupp14_CV.Models
 {
-    public class UserContext : DbContext
+    public class UserContext : IdentityDbContext<User>
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options) { }
 
