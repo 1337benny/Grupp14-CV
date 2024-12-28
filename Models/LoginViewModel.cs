@@ -4,9 +4,10 @@ namespace Grupp14_CV.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Vänligen skriv ett användarnamn.")]
+        [Required(ErrorMessage = "Vänligen skriv en epost.")]
         [StringLength(255)]
-        public string AnvandarNamn { get; set; }
+        public string Epost { get; set; }
+
         [Required(ErrorMessage = "Vänligen skriv lösenord.")]
         [DataType(DataType.Password)]
         public string Losenord { get; set; }
