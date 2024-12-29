@@ -36,7 +36,7 @@ namespace Grupp14_CV.Models
         [StringLength(400)]
         public string PreviousExperience { get; set; }
 
-        public User Users { get; set; }
+        public virtual User Users { get; set; }
 
         //public virtual ICollection<User> Users { get; set; } = new List<User>();
 

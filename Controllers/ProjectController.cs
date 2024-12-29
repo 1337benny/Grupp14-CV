@@ -13,10 +13,11 @@ namespace Grupp14_CV.Controllers
             projects = service;
         }
 
-        [HttpGet]
+        
         public IActionResult Project()
         {
-            return View();
+            IQueryable<Project> projectList = from project in projects.Projects select project;
+            return View(projectList.ToList());
         }
         [HttpGet]
         public IActionResult AddProject()

@@ -1,6 +1,7 @@
 using Grupp14_CV.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<UserContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("UserContext")));
+options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("UserContext")));
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UserContext>().AddDefaultTokenProviders();
 

@@ -33,7 +33,7 @@ namespace Grupp14_CV.Models
         public int? CVID { get; set; }
 
         [ForeignKey(nameof(CVID))]
-        public CV CV { get; set; }
+        public virtual CV CV { get; set; }
 
         public virtual IEnumerable<Message> SentMessages { get; set; } = new List<Message>();
 
