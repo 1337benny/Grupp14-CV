@@ -1,0 +1,26 @@
+﻿@model List<Project> 
+
+@{
+    ViewData["Title"] = "Projektsida";
+}
+<table class="table">
+    <thead>
+        <td>Titel</td>
+        <td>Beskrivning</td>
+        <td>Startdatum</td>
+        <td>Slutdatum</td>
+        <td>Skapad av</td>
+    </thead>
+    <tbody>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td>@project.Titel</td>
+                <td>@project.Description</td>
+                <td>@project.StartDate</td>
+                <td>@project.EndDate</td>
+                <td>@project.user.Firstname + " " + @project.user.Lastname</td>
+            </tr>
+        }
+    </tbody>
+</table>
