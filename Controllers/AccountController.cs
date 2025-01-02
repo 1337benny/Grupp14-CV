@@ -136,11 +136,33 @@ namespace Grupp14_CV.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+
+            var username = User.Identity.Name;
+            var logInUser = users.Users.FirstOrDefault(x => x.UserName == username);
+
             IQueryable<User> userList = from user in users.Users select user;
 
-            userList = userList.Where(user => user.Id == id);
+            userList = userList.Where(user => user.Id == logInUser.Id);
+
+            User theUser = userList.FirstOrDefault();
             
-            return View(birdList.ToList());
+            return View(theUser);
+        }
+
+        [HttpGet]
+        public IActionResult EditProfile()
+        {
+
+            var username = User.Identity.Name;
+            var logInUser = users.Users.FirstOrDefault(x => x.UserName == username);
+
+            IQueryable<User> userList = from user in users.Users select user;
+
+            userList = userList.Where(user => user.Id == logInUser.Id);
+
+            User theUser = userList.FirstOrDefault();
+
+            return View(theUser);
         }
     }
 }

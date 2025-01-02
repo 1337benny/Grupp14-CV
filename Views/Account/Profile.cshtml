@@ -1,1 +1,52 @@
-﻿<h1>Profil för @User.Identity.Name</h1>
+﻿@* @model User
+
+<script>
+	const birthYear = parseInt(document.getElementById('current-year').textContent, 10);
+	const currentYear = new Date().getFullYear();
+	const age = currentYear - birthYear;
+	document.getElementById('current-year').textContent = age;
+</script>
+
+<h1>Min profil</h1>
+
+<div>
+	<div class="border border-dark" style="width: 300px; height: 300px;">
+		<img src="#" alt="Alternate Text" />
+	</div>
+	<div>
+		<p><span style="font-weight:500">Namn:</span> @Model.Firstname @Model.Lastname</p>
+		<p><span style="font-weight:500">Ålder:</span> <span id="current-year">@Model.BirthDay.Year</span></p>
+
+		
+	</div>
+
+
+
+
+
+
+
+</div>
+ *@
+
+ @model User
+
+
+<h1>Min profil</h1>
+
+<div class="d-md-inline-flex">
+    <div class="border border-dark" style="width: 300px; height: 300px;">
+        <img src="#" alt="Alternate Text" />
+    </div>
+    <div>
+        <p><span style="font-weight:500">Namn:</span> @Model.Firstname @Model.Lastname</p>
+        <p>
+            <span style="font-weight:500">Ålder:</span>
+            <span id="age"></span>
+        </p>
+        <p style="display:none;" id="birth-year">@Model.BirthDay.Year</p>
+    </div>
+</div>
+<div>
+	<a asp-action="EditProfile"><button>Redigera profil</button></a>
+</div>
