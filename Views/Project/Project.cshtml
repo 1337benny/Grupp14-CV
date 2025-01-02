@@ -1,8 +1,11 @@
 ﻿@model List<Project> 
 
+
 @{
     ViewData["Title"] = "Projektsida";
 }
+<a asp-action="AddProject"><button>Skapa nytt projekt</button></a>
+
 <table class="table">
     <thead>
         <td>Titel</td>
@@ -10,6 +13,7 @@
         <td>Startdatum</td>
         <td>Slutdatum</td>
         <td>Skapad av</td>
+        <td>Deltagare</td>
     </thead>
     <tbody>
         @foreach (var project in Model)
@@ -19,7 +23,13 @@
                 <td>@project.Description</td>
                 <td>@project.StartDate</td>
                 <td>@project.EndDate</td>
-                <td>@project.user.Firstname + " " + @project.user.Lastname</td>
+                <td>@project.user.Firstname @project.user.Lastname</td>
+                <td>
+                @foreach (var uip in project.UsersInProject){
+                        @uip.User.Firstname @(" ") @uip.User.Lastname
+                }
+
+                </td>
             </tr>
         }
     </tbody>

@@ -9,10 +9,13 @@ namespace Grupp14_CV.Controllers
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
 
-        public AccountController(UserManager<User> userManag, SignInManager<User> signInMang)
+        private UserContext users;
+
+        public AccountController(UserManager<User> userManag, SignInManager<User> signInMang, UserContext service)
         {
             this.userManager = userManag;
             this.signInManager = signInMang;
+            this.users = service;
         }
 
         [HttpGet]
@@ -128,6 +131,16 @@ namespace Grupp14_CV.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            IQueryable<User> userList = from user in users.Users select user;
+
+            userList = userList.Where(user => user.Id == id);
+            
+            return View(birdList.ToList());
         }
     }
 }

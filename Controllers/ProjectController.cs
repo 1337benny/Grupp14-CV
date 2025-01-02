@@ -46,9 +46,19 @@ namespace Grupp14_CV.Controllers
                 // Tilldela CreatorID
                 project.CreatorID = user.Id;
 
-                // Lägg till projektet och spara
+                // Lägg till projektet och sparar
                 projects.Add(project);
                 projects.SaveChanges();
+
+                //Lägger till användaren och projektet i sambandstabellen.
+                Users_In_Project user_project = new Users_In_Project();
+                user_project.UserID = user.Id;
+                user_project.ProjectID = project.ProjectID; //Sätter projektID till projektet som precis skapats.
+                projects.Add(user_project);
+
+                //Sparar sambandet i databasen
+                projects.SaveChanges();
+
                 return RedirectToAction("Project", "Project");
             }
             else

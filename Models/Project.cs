@@ -29,7 +29,7 @@ namespace Grupp14_CV.Models
         public DateOnly StartDate { get; set; }
 
 
-        public DateTime EndDate { get; set; }
+        public DateOnly EndDate { get; set; }
 
 
         [Required]
