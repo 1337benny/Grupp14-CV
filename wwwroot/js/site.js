@@ -11,3 +11,7 @@ const currentYear = new Date().getFullYear();
 const age = currentYear - birthYear;
 // Sätt åldern i elementet med ID "age"
 document.getElementById('age').textContent = age;
+
+
+//Sätter värdet på combobox i profileredigeraren
+document.getElementById("public-setting").value = "Offentlig", "Privat";

@@ -1,4 +1,70 @@
-﻿
-<h1>Redigera profilen</h1>
+﻿@model User
 
+<h1>Redigera profilen:</h1>
 
+<div class="border border-dark">
+<form asp-action="UpdateUser" method="post">
+    <label>Förnamn: </label>
+    <input name="userFirstname" asp-for="Firstname" />
+    <br />
+    <label>Efternamn: </label>
+    <input name="userLastname" asp-for="Lastname" />
+    <br />
+    <label>Födelsedatum: </label>
+    <input name="userBirthDay" type="date" asp-for="BirthDay" />
+    <br />
+    <label>Privat/Offentlig: </label>
+    <select name="userPrivacy" asp-for="PublicSetting">
+        <option value="true">Offentlig</option>
+        <option value="false">Privat</option>
+    </select>
+    <br />
+    <button type="submit">Spara</button>
+</form>
+</div>
+<h1>Mitt CV: </h1>
+@if (Model.CVID == null || string.IsNullOrEmpty(Model.CVID.ToString())){
+    <div class="border border-dark">
+        <form asp-action="CreateCV" method="post">
+            <label>Titel: </label>
+            <input name="cvHeader" @* asp-for="Header" *@ />
+            <br />
+            <label>Om mig: </label>
+            <input name="cvContent" @* asp-for="Content" *@ />
+            <br />
+            <label>Kompetenser: </label>
+            <input name="cvCompetence" @* asp-for="Competence" *@ />
+            <br />
+            <label>Utbildning: </label>
+            <input name="cvEducation" @* asp-for="Education" *@ />
+            <br />
+            <label>Tidigare erfarenhet: </label>
+            <input name="cvPreviousExperience" @* asp-for="PreviousExperience" *@ />
+            <br />
+            <button type="submit">Spara</button>
+        </form>
+    </div>
+} else{
+    <div class="border border-dark">
+        <form asp-action="UpdateCV" method="post">
+            <label>Titel: </label>
+            <input name="cvHeader" asp-for="CV.Header" />
+            <br />
+            <label>Om mig: </label>
+            <input name="cvContent" asp-for="CV.Content" />
+            <br />
+            <label>Kompetenser: </label>
+            <input name="cvCompetence" asp-for="CV.Competence" />
+            <br />
+            <label>Utbildning: </label>
+            <input name="cvEducation" asp-for="CV.Education" />
+            <br />
+            <label>Tidigare erfarenhet: </label>
+            <input name="cvPreviousExperience" asp-for="CV.PreviousExperience" />
+            <br />
+            <input type="hidden" name="cvID" value="@Model.CVID" />
+            <br />
+            <button type="submit">Spara</button>
+        </form>
+    </div>
+}
