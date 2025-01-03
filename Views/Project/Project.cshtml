@@ -8,7 +8,7 @@
 
 <table class="table">
     <thead>
-        <td>Titel</td>
+    <td>Titel</td>
         <td>Beskrivning</td>
         <td>Startdatum</td>
         <td>Slutdatum</td>
@@ -19,7 +19,7 @@
         @foreach (var project in Model)
         {
             <tr>
-                <td>@project.Titel</td>
+                <td><a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@project.ProjectID">@project.Titel</a></td>
                 <td>@project.Description</td>
                 <td>@project.StartDate</td>
                 <td>@project.EndDate</td>

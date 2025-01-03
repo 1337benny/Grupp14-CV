@@ -1,0 +1,56 @@
+﻿@model Project
+
+
+@{
+    ViewData["Title"] = "Projekt info";
+}
+
+
+<table class="table">
+    <thead>
+    <td>Titel</td>
+    <td>Beskrivning</td>
+    <td>Startdatum</td>
+    <td>Slutdatum</td>
+    <td>Skapad av</td>
+    <td>Deltagare</td>
+    </thead>
+    <tbody>
+        
+            <tr>
+            <td>@Model.Titel</td>
+            <td>@Model.Description</td>
+            <td>@Model.StartDate</td>
+            <td>@Model.EndDate</td>
+            <td>@Model.user.Firstname @Model.user.Lastname</td>
+            <td> 
+                @foreach (var uip in @Model.UsersInProject){
+                    @uip.User.Firstname @(" ") @uip.User.Lastname
+                }
+            
+            </td>
+                
+                
+            </tr>
+        
+    </tbody>
+</table>
+
+@if (User.Identity.Name == Model.user.UserName)
+{
+    <button>Redigera</button>
+}
+else {
+    foreach (var uip in Model.UsersInProject)
+    {
+        @if (User.Identity.Name == uip.User.UserName){
+            <a class="link-id" asp-controller="Project" asp-action="LeaveProject" asp-route-projectID="@Model.ProjectID"><button>Gå ur</button></a>
+             
+        }
+        else{
+            <a class="link-id" asp-controller="Project" asp-action="JoinProject" asp-route-projectID="@Model.ProjectID"><button>Gå med</button></a>
+        }
+    }
+}
+
+
