@@ -24,34 +24,7 @@ namespace Grupp14_CV.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User anvandare = new User();
-        //        anvandare.Email = registerViewModel.Epost;
-        //        anvandare.Firstname = registerViewModel.Fornamn;
-        //        anvandare.Lastname = registerViewModel.Efternamn;
-        //        anvandare.BirthDay = registerViewModel.FodelseDatum;
-
-        //        var result =
-        //        await userManager.CreateAsync(anvandare, registerViewModel.Losenord);
-        //        if (result.Succeeded)
-        //        {
-        //            await signInManager.SignInAsync(anvandare, isPersistent: true);
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //        {
-        //            foreach (var error in result.Errors)
-        //            {
-        //                ModelState.AddModelError("", error.Description);
-        //            }
-        //        }
-        //    }
-        //    return View(registerViewModel);
-        //}
+        
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)

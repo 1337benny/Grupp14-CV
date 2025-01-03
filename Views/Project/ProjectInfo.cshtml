@@ -8,16 +8,16 @@
 
 <table class="table">
     <thead>
-    <td>Titel</td>
-    <td>Beskrivning</td>
-    <td>Startdatum</td>
-    <td>Slutdatum</td>
-    <td>Skapad av</td>
-    <td>Deltagare</td>
+        <td>Titel</td>
+        <td>Beskrivning</td>
+        <td>Startdatum</td>
+        <td>Slutdatum</td>
+        <td>Skapad av</td>
+        <td>Deltagare</td>
     </thead>
     <tbody>
-        
-            <tr>
+
+        <tr>
             <td>@Model.Titel</td>
             <td>@Model.Description</td>
             <td>@Model.StartDate</td>
@@ -25,30 +25,62 @@
             <td>@Model.user.Firstname @Model.user.Lastname</td>
             <td> 
                 @foreach (var uip in @Model.UsersInProject){
-                    @uip.User.Firstname @(" ") @uip.User.Lastname
+                    @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
                 }
-            
+
             </td>
-                
-                
-            </tr>
-        
+
+
+        </tr>
+
     </tbody>
 </table>
 
 @if (User.Identity.Name == Model.user.UserName)
 {
-    <button>Redigera</button>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <h2>Redigera projektet: </h2>
+
+    <form class="border border-dark" asp-action="EditProject" method="post">
+        <label>Titel: </label>
+        <input name="pTitel" asp-for="Titel" />
+        <br />
+        <label>Beskrivning: </label>
+        <input name="pDescription" asp-for="Description" />
+        <br />
+        <label>Startdatum: </label>
+        <input type="date" name="pStartDate" asp-for="StartDate" />
+        <br />
+        <label>Slutdatum: </label>
+        <input type="date" name="pEndDate" asp-for="EndDate" />
+        <br />
+        <input type="hidden" name="pCreatorID" value="1" />
+        <br />
+        <br />
+        <input type="hidden" name="pID" value="@Model.ProjectID" />
+        <br />
+        <button type="submit">Spara ändringar</button>
+    </form>
+    
 }
 else {
     foreach (var uip in Model.UsersInProject)
     {
         @if (User.Identity.Name == uip.User.UserName){
-            <a class="link-id" asp-controller="Project" asp-action="LeaveProject" asp-route-projectID="@Model.ProjectID"><button>Gå ur</button></a>
-             
+            <form asp-controller="Project" asp-action="LeaveProject" method="post">
+                <input type="hidden" name="projectID" value="@Model.ProjectID" />
+                <button type="submit">Gå ur</button>
+            </form>
+            break;
+
         }
         else{
-            <a class="link-id" asp-controller="Project" asp-action="JoinProject" asp-route-projectID="@Model.ProjectID"><button>Gå med</button></a>
+            <form asp-controller="Project" asp-action="JoinProject" method="post">
+                <input type="hidden" name="projectID" value="@Model.ProjectID" />
+                <button type="submit">Gå med</button>
+            </form>
+
         }
     }
 }

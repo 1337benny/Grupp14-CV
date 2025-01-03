@@ -111,5 +111,57 @@ namespace Grupp14_CV.Controllers
                 return RedirectToAction("Project", "Project");
             }
         }
-    }
+
+        [HttpPost]
+        public IActionResult LeaveProject(int projectID)
+        {
+            if (ModelState.IsValid)
+            {
+                // Hämta den inloggade användaren
+                var username = User.Identity.Name;
+                var user = projects.Users.FirstOrDefault(x => x.UserName == username);
+
+                IQueryable<Users_In_Project> uipList = from uip in projects.Users_In_Projects where uip.ProjectID == projectID && uip.UserID == user.Id select uip;
+
+                projects.Remove(uipList.FirstOrDefault());
+
+
+                //Sparar borttagningen i databasen
+                projects.SaveChanges();
+
+                return RedirectToAction("Project", "Project");
+            }
+            else
+            {
+                // Förbered användarvalen för ViewBag vid valideringsfel
+                List<SelectListItem> users = projects.Users.Select
+                    (x => new SelectListItem { Text = x.Firstname, Value = x.Id.ToString() }).ToList();
+                ViewBag.options = users;
+
+                return RedirectToAction("Project", "Project");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditProject(string pTitel, string pDescription, DateOnly pStartDate, DateOnly pEndDate, int pID)
+        {
+            IQueryable<Project> projectList = from project in projects.Projects where project.ProjectID == pID select project;
+
+            Project updatedProject = projectList.FirstOrDefault();
+            updatedProject.Titel = pTitel;
+            updatedProject.Description = pDescription;
+            updatedProject.StartDate = pStartDate;
+            updatedProject.EndDate = pEndDate;
+            
+
+            projects.Update(updatedProject);
+            projects.SaveChanges();
+
+            return RedirectToAction("Project", "Project");
+        }
+
+
+
+
+        }
 }
