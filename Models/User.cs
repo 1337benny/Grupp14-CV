@@ -29,6 +29,8 @@ namespace Grupp14_CV.Models
         [Required]
         public DateOnly BirthDay { get; set; }
 
+        public string? ProfilePicturePath { get; set; }
+
 
         public int? CVID { get; set; }
 

@@ -22,6 +22,23 @@
     <button type="submit">Spara</button>
 </form>
 </div>
+<h1>Ändra profilbild:</h1>
+
+<div class="border border-dark">
+    @* <form asp-action="UpdateUserProfilePicture" method="post">
+        <div class="border border-dark" style="width: 100px; height: 100px;">
+            <img src="#" alt="Alternate Text" />
+        </div>
+        <input type="file" name="imgFile" />
+        
+        <button type="submit">Spara</button>
+    </form> *@
+    <form asp-action="UpdateUserProfilePicture" method="post" enctype="multipart/form-data">
+        <input type="file" name="imgFile" accept="image/*" />
+        <button type="submit">Ladda upp</button>
+    </form>
+
+</div>
 <h1>Mitt CV: </h1>
 @if (Model.CVID == null || string.IsNullOrEmpty(Model.CVID.ToString())){
     <div class="border border-dark">
@@ -91,13 +108,13 @@
 <div class="border border-dark">
     <form asp-action="UpdateUserPassword" method="post">
         <label>Gammalt lösenord: </label>
-        <input name="oldPassword" />
+        <input type="password" name="oldPassword" />
         <br />
         <label>Nytt lösenord: </label>
-        <input name="newPassword" />
+        <input type="password" name="newPassword" />
         <br />
         <label>Upprepa nytt lösenord: </label>
-        <input name="confirmPassword" />
+        <input type="password" name="confirmPassword" />
         <br />
        
         <button type="submit">Spara</button>

@@ -1,8 +1,11 @@
 ﻿using Grupp14_CV.Models;
+//using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using System.Diagnostics;
 using System.Security.Cryptography;
+//using PasswordVerificationResult = Microsoft.AspNet.Identity.PasswordVerificationResult;
 
 namespace Grupp14_CV.Controllers
 {
@@ -213,21 +216,99 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUserPassword(string oldPassword, string newPassword, string confirmPassword)
+        public async Task <IActionResult> UpdateUserPassword(string oldPassword, string newPassword, string confirmPassword)
         {
+            
             //Hämtar ut alla users som stämmer in på vilkoret
             IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
 
-            //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
+            //Sparar resultatet i ett User objekt 
             User updatedUser = userList.FirstOrDefault();
-            
 
-            //Sparar och uppdaterar databasen
-            users.Update(updatedUser);
-            users.SaveChanges();
+            //Uppdaterar användarens lösenord
+            try
+            {
+               await userManager.ChangePasswordAsync(updatedUser, oldPassword, newPassword);
+                Debug.WriteLine("Lösenordet ändrat till " + newPassword);
+            }
+            catch (Exception ex) {
+                Debug.WriteLine("felmeddelande: " + ex.Message);
+            }
+           
 
             return RedirectToAction("Profile");
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> UpdateUserProfilePicture(string imgFile)
+        //{
+
+        //    //Hämtar ut alla users som stämmer in på vilkoret
+        //    IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
+
+        //    //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
+        //    User updatedUser = userList.FirstOrDefault();
+
+        //    updatedUser.ProfilePicturePath = imgFile;
+
+
+
+        //    users.Update(updatedUser);
+        //    users.SaveChanges();
+
+
+
+        //    return RedirectToAction("Profile");
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserProfilePicture(IFormFile imgFile)
+        {
+            if (imgFile != null && imgFile.Length > 0)
+            {
+                // Kontrollera att filen är en bild
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var fileExtension = Path.GetExtension(imgFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ProfilePicture", "Endast bildfiler (JPG, PNG, GIF) är tillåtna.");
+                    return RedirectToAction("Profile");
+                }
+
+                // Hämta användaren från databasen
+                IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
+                User updatedUser = userList.FirstOrDefault();
+                if (updatedUser == null)
+                {
+                    return NotFound("Användaren hittades inte.");
+                }
+
+                // Generera ett unikt filnamn
+                var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
+
+                // Sätt sökvägen där bilden sparas
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                var filePath = Path.Combine(uploadPath, uniqueFileName);
+
+                // Spara filen
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imgFile.CopyToAsync(stream);
+                }
+
+                // Uppdatera användarens profilbildväg
+                updatedUser.ProfilePicturePath = $"/images/{uniqueFileName}";
+                users.Update(updatedUser);
+                users.SaveChanges();
+            }
+            else
+            {
+                ModelState.AddModelError("ProfilePicture", "Ingen bild valdes.");
+            }
+
+            return RedirectToAction("Profile");
+        }
+
 
 
     }

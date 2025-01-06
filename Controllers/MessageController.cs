@@ -12,5 +12,19 @@ namespace Grupp14_CV.Controllers
         { 
             messages = service;
         }
+
+        [HttpGet]
+        public IActionResult AllMessages()
+        {
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult NewMessage()
+        {
+
+            return View();
+        }
     }
 }
