@@ -1,5 +1,8 @@
 ﻿@model Project
 
+@{
+    bool isUserInProject = Model.UsersInProject.Any(uip => uip.User.UserName == User.Identity.Name);
+}
 
 @{
     ViewData["Title"] = "Projekt info";
@@ -65,7 +68,24 @@
     
 }
 else {
-    foreach (var uip in Model.UsersInProject)
+    
+
+@if (isUserInProject)
+{
+    <form asp-controller="Project" asp-action="LeaveProject" method="post">
+        <input type="hidden" name="projectID" value="@Model.ProjectID" />
+        <button type="submit">Gå ur</button>
+    </form>
+}
+else
+{
+    <form asp-controller="Project" asp-action="JoinProject" method="post">
+        <input type="hidden" name="projectID" value="@Model.ProjectID" />
+        <button type="submit">Gå med</button>
+    </form>
+}
+
+    @* foreach (var uip in Model.UsersInProject)
     {
         @if (User.Identity.Name == uip.User.UserName){
             <form asp-controller="Project" asp-action="LeaveProject" method="post">
@@ -80,9 +100,10 @@ else {
                 <input type="hidden" name="projectID" value="@Model.ProjectID" />
                 <button type="submit">Gå med</button>
             </form>
+            break;
 
         }
-    }
+    } *@
 }
 
 

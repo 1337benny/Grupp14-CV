@@ -68,3 +68,39 @@
         </form>
     </div>
 }
+<h1>Mina projekt:</h1>
+<div class="border border-dark">
+@foreach(var uip in Model.UsersInProject)
+{
+            <label>Titel: </label>
+            <a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@uip.ProjectID">@uip.Project.Titel</a>
+        @if (Model.Id == uip.Project.CreatorID)
+        {
+            <label>Skapare</label>
+        }
+        else
+        {
+            <label>Deltagare</label>
+        }
+
+                <br />
+}
+</div>
+<h1>Ändra lösenord:</h1>
+
+<div class="border border-dark">
+    <form asp-action="UpdateUserPassword" method="post">
+        <label>Gammalt lösenord: </label>
+        <input name="oldPassword" />
+        <br />
+        <label>Nytt lösenord: </label>
+        <input name="newPassword" />
+        <br />
+        <label>Upprepa nytt lösenord: </label>
+        <input name="confirmPassword" />
+        <br />
+       
+        <button type="submit">Spara</button>
+    </form>
+</div>
+

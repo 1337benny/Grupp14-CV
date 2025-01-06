@@ -211,5 +211,24 @@ namespace Grupp14_CV.Controllers
 
             return RedirectToAction("Profile");
         }
+
+        [HttpPost]
+        public IActionResult UpdateUserPassword(string oldPassword, string newPassword, string confirmPassword)
+        {
+            //Hämtar ut alla users som stämmer in på vilkoret
+            IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
+
+            //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
+            User updatedUser = userList.FirstOrDefault();
+            
+
+            //Sparar och uppdaterar databasen
+            users.Update(updatedUser);
+            users.SaveChanges();
+
+            return RedirectToAction("Profile");
+        }
+
+
     }
 }
