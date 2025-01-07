@@ -1,5 +1,26 @@
 ﻿<h1>Nytt meddelande</h1>
 
+<form asp-action="SendNewMessage" method="post">
+    <label>Mottagare</label>
+    <div>
+        <input type="search"
+               name="search"
+               id="searchInput"
+               placeholder="Sök användare..."
+               oninput="searchUsers()" />
+        <div id="searchResults">
+        </div>
+        <br />
+        <label>Meddelande</label>
+        <br />
+        <input type="text" style="height:300px; width:70%" name="content" value="" />
+        <br />
+    <button type="submit">Skicka</button>
+</form>
+
+
+
+@* 
 <label>Mottagare</label>
 <div>
 <input type="search"
@@ -7,8 +28,9 @@
        id="searchInput"
        placeholder="Sök användare..."
        oninput="searchUsers()" />
-<ul id="searchResults"></ul>
+<div
+    id="searchResults">
 </div>
 <br />
 <label>Meddelande</label>
-<input type="text" style="height:500px; width:70%" name="name" value="" />
+<input type="text" style="height:500px; width:70%" name="name" value="" /> *@

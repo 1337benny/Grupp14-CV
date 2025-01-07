@@ -25,3 +25,21 @@ body {
     color: black;
     font-weight: 600;
 }
+
+.searchCss{
+    border: solid;
+    padding: 1rem;
+    border-radius: 2px;
+}
+
+.searchLi{
+    text-decoration: underline;
+}
+
+
+.searchLi:hover{
+    cursor: pointer;
+    color: blue;
+    font-size: 105%;
+    
+}

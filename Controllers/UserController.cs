@@ -24,7 +24,7 @@ namespace Grupp14_CV.Controllers
 
             var results = users.Users
                 .Where(u => u.Firstname.StartsWith(query) || u.Lastname.StartsWith(query))
-                .Select(u => u.Firstname + " " + u.Lastname)
+                .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
 
             return Json(new { results });
