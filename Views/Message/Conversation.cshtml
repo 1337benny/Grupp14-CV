@@ -1,17 +1,39 @@
 ﻿@model List<Message>
 
+@{
+	string reciever = "";
+}
+
 	<div class="border border-dark border-3" style="height: 60%; width: 40%;">
 
 	@foreach (Message message in Model)
 	{
+		
 		<div class="border border-dark ms-3 mx-3">
 		<label>@message.SendUser.Firstname</label>
 		<br />
 		<textarea readonly>@message.Content</textarea>
 		</div>
 		<br />
+
+		if (message.SendUser.UserName.Equals(User.Identity.Name))
+		{
+			reciever = message.ReceiverID;
+		}
+		else
+		{
+			reciever = message.SenderID;
+		}
 	}
 
 
-
+    
 	</div>
+<form asp-action="SendMessage" asp-route-recieverID="@reciever" method="post">
+
+	<label>Meddelande</label>
+	<br />
+	<input type="text" style="height:20%; width:35%" name="content" value="" />
+	<br />
+	<button type="submit">Skicka</button>
+</form>

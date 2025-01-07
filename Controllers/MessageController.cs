@@ -1,5 +1,6 @@
 ﻿using Grupp14_CV.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grupp14_CV.Controllers
@@ -108,5 +109,24 @@ namespace Grupp14_CV.Controllers
 
 			return View(messageList);
         }
-    }
+
+		[HttpPost]
+		public IActionResult SendMessage(string recieverID, string content)
+		{
+			var username = User.Identity.Name;
+			var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+
+			Message message = new Message();
+			message.Content = content;
+			message.ReceiverID = recieverID;
+			message.SenderID = logInUser.Id;
+
+			messages.Add(message);
+			messages.SaveChanges();
+
+
+			return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
+
+		}
+	}
 }
