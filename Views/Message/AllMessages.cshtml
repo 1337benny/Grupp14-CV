@@ -1,3 +1,17 @@
-﻿<h1>Meddelanden</h1>
+﻿@model List<Message>
+
+<h1>Konversationer</h1>
+
+@foreach (Message message in Model)
+{
+	<a asp-action="Conversation" asp-route-senderID="@message.SenderID" asp-route-recieverID="@message.ReceiverID">
+
+	<label>@message.SendUser.Firstname @(" ") @message.SendUser.Lastname @(", ") @message.ReceiveUser.Firstname @(" ") @message.ReceiveUser.Lastname</label>
+	</a>
+	<br />
+	<br />
+	
+}
+
 
 <a asp-action="NewMessage"><button>Skicka nytt meddelande</button></a>

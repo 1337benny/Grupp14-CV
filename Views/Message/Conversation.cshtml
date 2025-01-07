@@ -1,0 +1,17 @@
+﻿@model List<Message>
+
+	<div class="border border-dark border-3" style="height: 60%; width: 40%;">
+
+	@foreach (Message message in Model)
+	{
+		<div class="border border-dark ms-3 mx-3">
+		<label>@message.SendUser.Firstname</label>
+		<br />
+		<textarea readonly>@message.Content</textarea>
+		</div>
+		<br />
+	}
+
+
+
+	</div>

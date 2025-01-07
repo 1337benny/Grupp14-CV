@@ -43,3 +43,8 @@ body {
     font-size: 105%;
     
 }
+
+textarea{
+    resize: none;
+    
+}

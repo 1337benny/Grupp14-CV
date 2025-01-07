@@ -14,14 +14,45 @@ namespace Grupp14_CV.Controllers
             messages = service;
         }
 
-        [HttpGet]
-        public IActionResult AllMessages()
-        {
+		//[HttpGet]
+		//public IActionResult AllMessages()
+		//{
+		//    var username = User.Identity.Name;
+		//    var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
 
-            return View();
-        }
+		//    IQueryable<Message> messageList = from message in messages.Messages select message;
 
-        [HttpGet]
+		//    messageList = messageList.Where(message => message.SenderID == logInUser.Id || message.ReceiverID == logInUser.Id);
+		//    return View(messageList.Distinct().ToList());
+		//}
+		[HttpGet]
+		public IActionResult AllMessages()
+		{
+			var username = User.Identity.Name;
+			var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+
+			if (logInUser == null)
+			{
+				return NotFound("Användaren hittades inte.");
+			}
+
+			var messageList = messages.Messages
+				.Where(message => message.SenderID == logInUser.Id || message.ReceiverID == logInUser.Id)
+				.AsEnumerable()
+				.GroupBy(message =>
+					new
+					{
+						User1 = Math.Min(message.SenderID.GetHashCode(), message.ReceiverID.GetHashCode()),
+						User2 = Math.Max(message.SenderID.GetHashCode(), message.ReceiverID.GetHashCode())
+					})
+				.Select(group => group.First())
+				.ToList();
+
+			return View(messageList);
+		}
+
+
+		[HttpGet]
         public IActionResult NewMessage()
         {
 
@@ -55,6 +86,27 @@ namespace Grupp14_CV.Controllers
             messages.SaveChanges();
 
             return RedirectToAction("AllMessages", "Message");
+        }
+
+        [HttpGet]
+
+        public IActionResult Conversation(string senderID, string recieverID)
+        {
+			//var username = User.Identity.Name;
+			//var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+
+			//if (logInUser == null)
+			//{
+			//	return NotFound("Användaren hittades inte.");
+			//}
+
+			var messageList = messages.Messages
+				.Where(message => message.SenderID == senderID && message.ReceiverID == recieverID ||
+				  message.ReceiverID == senderID && message.SenderID == recieverID
+				)
+				.ToList();
+
+			return View(messageList);
         }
     }
 }
