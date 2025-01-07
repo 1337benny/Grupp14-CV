@@ -1,17 +1,46 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
+﻿
 // Hämta födelseåret från HTML
 const birthYear = parseInt(document.getElementById('birth-year').textContent, 10);
-// Hämta det aktuella året
-const currentYear = new Date().getFullYear();
+
+// Hämta dagens datum
+const todayDate = new Date();
+
+// Beräkna det aktuella året
+const currentYear = todayDate.getFullYear();
+
+// Kontrollera om det är före den 1 januari
+const hasBirthdayPassed = todayDate.getMonth() > 0 || (todayDate.getMonth() === 0 && todayDate.getDate() >= 1);
+
 // Beräkna åldern
-const age = currentYear - birthYear;
+let age = currentYear - birthYear;
+if (hasBirthdayPassed) {
+    age--; // Justera om personen inte fyllt år ännu
+}
+
 // Sätt åldern i elementet med ID "age"
 document.getElementById('age').textContent = age;
 
 
 //Sätter värdet på combobox i profileredigeraren
 document.getElementById("public-setting").value = "Offentlig", "Privat";
+
+//Sökfunktion för användare
+function searchUsers() {
+    const searchQuery = document.getElementById("searchInput").value;
+
+    fetch(`/User/Search?query=${encodeURIComponent(searchQuery)}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "";
+
+            data.results.forEach(user => {
+                const userElement = document.createElement("li");
+                userElement.textContent = user;
+                resultsContainer.appendChild(userElement);
+            });
+        })
+        .catch(error => {
+            console.error("Ett fel uppstod:", error);
+        });
+}
