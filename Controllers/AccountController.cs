@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Text;
 //using PasswordVerificationResult = Microsoft.AspNet.Identity.PasswordVerificationResult;
 
 namespace Grupp14_CV.Controllers
@@ -324,6 +325,75 @@ namespace Grupp14_CV.Controllers
             }
 
             return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendNewMessageNoUser(RegisterViewModel registerViewModel, string search, string content, string firstName, string lastName)
+        {
+            string email = search.Split('(', ')')[1];
+
+            //Hämtar ut mottagaren i ett User objekt 
+            IQueryable<User> userList = from user in users.Users select user;
+            userList = userList.Where(user => user.UserName == email);
+            User theUser = userList.FirstOrDefault();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < 100; i++)
+            {
+                stringBuilder.Append(chars[random.Next(chars.Length)]);
+            }
+
+            string newUserName = stringBuilder.ToString();
+
+            User newUser = new User();
+            newUser.Firstname = firstName;
+            newUser.Lastname = lastName;
+            newUser.UserName = newUserName;
+            newUser.BirthDay = DateOnly.FromDateTime(DateTime.Now);
+            newUser.EmailConfirmed = false;
+
+            var result = await userManager.CreateAsync(newUser, "12345Aa!");
+            if (result.Succeeded)
+            {
+                Message message = new Message();
+                message.Content = content;
+                message.ReceiverID = theUser.Id;
+                message.SenderID = newUser.Id;
+
+                users.Add(message);
+                users.SaveChanges();
+                //await signInManager.SignInAsync(newUser, isPersistent: true);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    if (error.Code == "DuplicateUserName")
+                    {
+                        ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
+                    }
+                    else if (error.Code == "PasswordTooShort")
+                    {
+                        ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+
+
+
+            
+
+            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
+
         }
 
 

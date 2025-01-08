@@ -1,19 +1,22 @@
 ﻿using Grupp14_CV.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Text;
 
 namespace Grupp14_CV.Controllers
 {
     public class MessageController : Controller
     {
-
+        
         private UserContext messages;
 
-        public MessageController(UserContext service) 
-        { 
+        public MessageController( UserContext service) 
+        {
+            
             messages = service;
         }
 
@@ -181,5 +184,69 @@ namespace Grupp14_CV.Controllers
 			return RedirectToAction("Conversation", new { senderID = message.SenderID, recieverID = message.ReceiverID });
 
 		}
-	}
+
+        //[HttpPost]
+        //public async Task<IActionResult> SendNewMessageNoUser(RegisterViewModel registerViewModel, string recieverID, string content, string firstName, string lastName)
+        //{
+            
+        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        //    var random = new Random();
+        //    var stringBuilder = new StringBuilder();
+
+        //    for (int i = 0; i < 100; i++)
+        //    {
+        //        stringBuilder.Append(chars[random.Next(chars.Length)]);
+        //    }
+
+        //    string newUserName = stringBuilder.ToString();
+
+        //    User newUser = new User();
+        //    newUser.Firstname = firstName;
+        //    newUser.Lastname = lastName;
+        //    newUser.UserName = newUserName;
+        //    newUser.BirthDay = DateOnly.FromDateTime(DateTime.Now);
+        //    newUser.EmailConfirmed = false;
+
+        //    var result = await userManager.CreateAsync(newUser, "12345Aa!");
+        //    if (result.Succeeded)
+        //    {
+        //        //await signInManager.SignInAsync(newUser, isPersistent: true);
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            if (error.Code == "DuplicateUserName")
+        //            {
+        //                ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
+        //            }
+        //            else if (error.Code == "PasswordTooShort")
+        //            {
+        //                ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("", error.Description);
+        //            }
+        //        }
+        //    }
+
+
+
+        //    Message message = new Message();
+        //    message.Content = content;
+        //    message.ReceiverID = recieverID;
+        //    message.SenderID = newUser.Id;
+
+        //    messages.Add(message);
+        //    messages.SaveChanges();
+
+        //    return RedirectToAction("Index", "Home");
+        //    //return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
+
+        //}
+
+        
+    }
 }
