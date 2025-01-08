@@ -117,7 +117,7 @@ function searchUsersGlobal() {
     resultsContainer.classList.add("searchCss");
 
     // Hämta sökresultat via API
-    fetch(`/User/Search?query=${encodeURIComponent(searchQuery)}`)
+    fetch(`/User/SearchUser?query=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
             resultsContainer.innerHTML = ""; // Rensa tidigare resultat

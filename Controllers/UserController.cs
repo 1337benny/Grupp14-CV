@@ -32,5 +32,40 @@ namespace Grupp14_CV.Controllers
             return Json(new { results });
         }
 
+        [HttpGet]
+        public JsonResult SearchUser(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                // Returnera tom JSON
+                return Json(new { results = new string[0] });
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var results = users.Users
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name
+                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name
+                )
+                .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
+                .ToList();
+
+                return Json(new { results });
+            }
+            else
+            {
+                var results = users.Users
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true
+                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true
+                )
+                .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
+                .ToList();
+
+                return Json(new { results });
+            }
+
+            
+        }
+
     }
 }
