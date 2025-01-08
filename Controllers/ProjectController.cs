@@ -89,6 +89,11 @@ namespace Grupp14_CV.Controllers
                 var username = User.Identity.Name;
                 var user = projects.Users.FirstOrDefault(x => x.UserName == username);
 
+                if (user == null)
+                {
+                    return RedirectToAction("Register", "Account");
+                }
+
 
                 //Lägger till användaren och projektet i sambandstabellen.
                 Users_In_Project user_project = new Users_In_Project();

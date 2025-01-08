@@ -7,9 +7,11 @@
 <div class="text-center">
     <h1 class="display-4">Välkommen</h1>
 
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
 </div>
 
+<h2>Utvalda CVn:</h2>
+<div class="d-md-inline-flex">
 @if (Model == null || !Model.Any())
 {
     <p>Finns inga CV</p>
@@ -18,44 +20,76 @@ else
 {
     @foreach (CV cV in Model)
     {
-        <div class="border border-dark">
+        <div class="border border-dark" style="width: 220px">
+            <img style="width: 200px; height: 200px; border-radius: 50%;" src="@cV.Users.ProfilePicturePath" alt="Alternate Text" />
+            <br />
             <label>Användare: </label>
             @if (cV.Users != null)
             {
                 <p>@cV.Users.Firstname @(" ") @cV.Users.Lastname</p>
             }
-            else
-            {
-                <p>Ingen användare kopplad</p>
-            }
-            <br />
+           
             <label>Titel: </label>
             <p>@cV.Header</p>
+            
+            <label>Innehåll: </label>
+            <p>@cV.Content</p>
+            
+            <label>Tidigare erfarenheter: </label>
+            <p>@cV.PreviousExperience</p>
+            
+            <label>Utbildning: </label>
+            <p>@cV.Education</p>
+            
+            <label>Kompetenser: </label>
+            <p>@cV.Competence</p>
+
+                <a asp-controller="Account" asp-action="OtherProfile" asp-route-searchUser="(@cV.Users.UserName)"><button>Visa profil</button></a>
+            
         </div>
     }
 }
+</div>
 
-
-@* @if (Model == null)
+<h2>Senaste projektet: </h2>
+<div>
+    @if (Model == null || !Model.Any())
 {
-   <p>FInns inga CV</p> 
-}
-else
-{
-    @foreach (CV cV in Model)
+        <p>Finns inga CV</p>
+    }
+    else
     {
-        <div class="border border-dark">
-            <label>Användare: </label>
-            <p>@cV.Users.Firstname @(" ") @cV.Users.Lastname</p>
-            <br />
-            <label>Titel: </label>
-            <p>@cV.Header</p>
-            <br />
-            <label>Titel: </label>
-            <p>@cV.Header</p>
+        int highestID = 0;
+        Project latestProject = null;
+        @foreach (CV cV in Model)
+        {
 
+            foreach(Project project in cV.Users.Projects)
+            {
+                
+                if (project.ProjectID > highestID)
+                {
+                    highestID = project.ProjectID;
+                    latestProject = project;
+                }
+                
+            }
+        }
+        <div class="border border-dark">
+        <label>Titel: </label>
+        <p>@latestProject.Titel</p>
+        <label>Beskrivning: </label>
+        <p>@latestProject.Description</p>
+        <label>Startdatum: </label>
+        <p>@latestProject.StartDate</p>
+        <label>Slutdatum: </label>
+        <p>@latestProject.EndDate</p>
+            <a asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@latestProject.ProjectID"><button>Visa projektet</button></a>
         </div>
     }
-} *@
+
+</div>
+
+
 
 

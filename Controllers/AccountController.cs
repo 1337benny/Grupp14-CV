@@ -132,6 +132,23 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpGet]
+        public IActionResult OtherProfile(string searchUser)
+        {
+
+            string email = searchUser.Split('(', ')')[1];
+
+            IQueryable<User> userList = from user in users.Users select user;
+
+            userList = userList.Where(user => user.UserName == email);
+
+            User theUser = userList.FirstOrDefault();
+
+            logInUserID = theUser.Id;
+
+            return View(theUser);
+        }
+
+        [HttpGet]
         public IActionResult EditProfile()
         {
 

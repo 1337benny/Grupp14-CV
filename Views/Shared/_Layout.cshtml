@@ -21,7 +21,17 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="px-3">
-                            <input type="text" name="Sök" value="" /> <button class="btn-secondary">Sök</button>
+                            @* <input type="text" name="Sök" value="" /> <button class="btn-secondary">Sök</button> *@
+                            <form asp-controller="Account" asp-action="OtherProfile" method="get">
+                            <input type="search"
+                                   name="searchUser"
+                                   id="searchInputUser"
+                                   placeholder="Sök användare..."
+                                   oninput="searchUsersGlobal()" />
+                                <button type="submit">Sök</button>
+                            <div id="searchResultsUser">
+                                    
+                            </form>
                         </li>
                         <li class="nav-item px-3">
                             <a class="nav-link text-dark text-decoration-underline" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>

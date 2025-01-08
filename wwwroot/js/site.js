@@ -101,6 +101,49 @@ function searchUsers() {
         });
 }
 
+function searchUsersGlobal() {
+    const searchInput = document.getElementById("searchInputUser");
+    const searchQuery = searchInput.value.trim(); // Ta bort eventuella mellanslag
+    const resultsContainer = document.getElementById("searchResultsUser");
+
+    // Hantera CSS-klassen baserat på om fältet är tomt
+    if (searchQuery === "") {
+        resultsContainer.classList.remove("searchCss");
+        resultsContainer.innerHTML = ""; // Rensa sökresultat
+        return; // Avsluta om fältet är tomt
+    }
+
+    // Lägg till CSS-klassen om det finns en sökfråga
+    resultsContainer.classList.add("searchCss");
+
+    // Hämta sökresultat via API
+    fetch(`/User/Search?query=${encodeURIComponent(searchQuery)}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsContainer.innerHTML = ""; // Rensa tidigare resultat
+
+            // Rendera nya resultat
+            data.results.forEach(user => {
+                const userElement = document.createElement("li");
+                userElement.classList.add("searchLi");
+                
+                userElement.textContent = user;
+
+                // Lägg till klickhändelse på varje namn
+                userElement.addEventListener("click", () => {
+                    searchInput.value = user; // Sätt input-fältet till användarens namn
+                    resultsContainer.innerHTML = ""; // Rensa sökresultat
+                    resultsContainer.classList.remove("searchCss"); // Ta bort CSS-klassen
+                });
+
+                resultsContainer.appendChild(userElement);
+            });
+        })
+        .catch(error => {
+            console.error("Ett fel uppstod:", error);
+        });
+}
+
 //Skrollar till botten i konversation meddelande
 document.addEventListener("DOMContentLoaded", function () {
     var container = document.getElementById("messageContainer");

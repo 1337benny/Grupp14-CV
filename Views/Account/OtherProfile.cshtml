@@ -1,31 +1,17 @@
 ﻿@model User
 
 
-<h1>Min profil - 
-    @if (Model.PublicSetting == true)
-    {
-        
-                
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
-                    <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z" />
-                </svg>
-            
-    }
-    else
-    {
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
-        </svg>
-    }
+<h1>
+    @Model.Firstname @Model.Lastname
 
 
 </h1>
 
 <div class="d-md-inline-flex">
-    
-        <img style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" src="@Model.ProfilePicturePath" alt="Profile picture" />
-        
-    
+
+    <img style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" src="@Model.ProfilePicturePath" alt="Profile picture" />
+
+
     <div>
         <p><span style="font-weight:500">Namn:</span> @Model.Firstname @Model.Lastname</p>
         <p>
@@ -33,7 +19,8 @@
             <span id="age"></span>
         </p>
         <p style="display:none;" id="birth-year">@Model.BirthDay</p>
-        @if (Model.PublicSetting == true){
+        @if (Model.PublicSetting == true)
+        {
             <p>
                 <span style="font-weight:500">Åtkomst: </span><span>
                     Offentlig
@@ -43,7 +30,8 @@
                 </span>
             </p>
         }
-        else{
+        else
+        {
             <p>
                 <span style="font-weight:500">Åtkomst: </span><span>
                     Privat
@@ -57,11 +45,10 @@
     </div>
 </div>
 <div>
-	<a asp-action="EditProfile"><button>Redigera profil</button></a>
+    <a asp-controller="Message" asp-action="NewMessage"><button>Skicka ett meddelande</button></a>
 </div>
 
-
-<h2>Mitt CV</h2>
+<h2>CV</h2>
 @if (Model.CVID != null)
 {
     <div class="border border-dark ms-3 mx-3" style="padding: 1rem;">
@@ -75,26 +62,24 @@
 }
 else
 {
-    <p>Du har inget CV.</p>
+    <p>Användaren har inget CV.</p>
 }
 
-<h2>Projekt jag är delaktig i</h2>
+<h2>Projekt</h2>
 
 @if (Model.UsersInProject != null)
 {
     if (Model.UsersInProject.FirstOrDefault() == null)
     {
-        <p>Du är inte med i något projekt.</p>
+        <p>Användaren är inte med i något projekt.</p>
     }
     foreach (Users_In_Project uip in Model.UsersInProject)
     {
-        
+
         <div class="border border-dark ms-3 mx-3" style="padding: 1rem;">
             <p><span style="font-weight:500">Titel: </span> @uip.Project.Titel</p>
             <p><span style="font-weight:500">Beskrivning: </span> @uip.Project.Description</p>
         </div>
     }
-    
+
 }
-
-

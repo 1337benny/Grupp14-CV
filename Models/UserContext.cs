@@ -61,55 +61,55 @@ namespace Grupp14_CV.Models
                 .HasForeignKey(uip => uip.ProjectID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<CV>().HasData(
-                new CV
-                {
-                    CVID = 1,
-                    Header = "Johans CV",
-                    Content = "Hej! Jag heter Johan och är född 2001. Jag gillar mysiga hemmakvällar och att programmera.",
-                    Competence = "Lösningsorienterad, tålmodig, klok.",
-                    Education = "Europaskolan Gymnasie & Örebro Universitet Systemvetenskap",
-                    PreviousExperience = "Ica, Willys, Netbeans, Rewatch, SQL-Server, HTML, Alla språk."
-                },
-                new CV
-                {
-                    CVID = 2,
-                    Header = "Antons CV",
-                    Content = "Hej! Jag heter Anton och är född 1998. Jag gillar sport, teknik och att laga mat.",
-                    Competence = "Noggrann, initiativrik, samarbetsvillig.",
-                    Education = "Stockholms Universitet Datavetenskap",
-                    PreviousExperience = "Coop, Elgiganten, C#, React, Node.js, MongoDB."
-                },
-                new CV
-                {
-                    CVID = 3,
-                    Header = "Williams CV",
-                    Content = "Hej! Jag heter William och är född 1995. Jag älskar att leda team, skapa lösningar och resa.",
-                    Competence = "Ledarskapsförmåga, kreativ, kommunikativ.",
-                    Education = "Chalmers Tekniska Högskola Industriell Ekonomi",
-                    PreviousExperience = "Rewatch, Microsoft, Azure, Python, SQL, Vue.js."
-                },
-                new CV
-                {
-                    CVID = 4,
-                    Header = "Oskars CV",
-                    Content = "Hej! Jag heter Oskar och är född 1997. Jag trivs med att arbeta med detaljer och analysera problem.",
-                    Competence = "Analytisk, strukturerad, lösningsorienterad.",
-                    Education = "Lunds Universitet Civilingenjör Informationsteknik",
-                    PreviousExperience = "Hemköp, Rewatch, Java, Docker, Kubernetes, MySQL, PHP."
-                },
-                new CV
-                {
-                    CVID = 5,
-                    Header = "Olivers CV",
-                    Content = "Hej! Jag heter Oliver och är född 2000. Jag brinner för ny teknik och att bygga intuitiva användarupplevelser.",
-                    Competence = "Innovativ, användarcentrerad, flexibel.",
-                    Education = "KTH Kungliga Tekniska Högskolan Datateknik",
-                    PreviousExperience = "NetOnNet, MediaMarkt, Kotlin, Swift, Figma, UX/UI Design."
-                }
+            //modelBuilder.Entity<CV>().HasData(
+            //    new CV
+            //    {
+            //        CVID = 1,
+            //        Header = "Johans CV",
+            //        Content = "Hej! Jag heter Johan och är född 2001. Jag gillar mysiga hemmakvällar och att programmera.",
+            //        Competence = "Lösningsorienterad, tålmodig, klok.",
+            //        Education = "Europaskolan Gymnasie & Örebro Universitet Systemvetenskap",
+            //        PreviousExperience = "Ica, Willys, Netbeans, Rewatch, SQL-Server, HTML, Alla språk."
+            //    },
+            //    new CV
+            //    {
+            //        CVID = 2,
+            //        Header = "Antons CV",
+            //        Content = "Hej! Jag heter Anton och är född 1998. Jag gillar sport, teknik och att laga mat.",
+            //        Competence = "Noggrann, initiativrik, samarbetsvillig.",
+            //        Education = "Stockholms Universitet Datavetenskap",
+            //        PreviousExperience = "Coop, Elgiganten, C#, React, Node.js, MongoDB."
+            //    },
+            //    new CV
+            //    {
+            //        CVID = 3,
+            //        Header = "Williams CV",
+            //        Content = "Hej! Jag heter William och är född 1995. Jag älskar att leda team, skapa lösningar och resa.",
+            //        Competence = "Ledarskapsförmåga, kreativ, kommunikativ.",
+            //        Education = "Chalmers Tekniska Högskola Industriell Ekonomi",
+            //        PreviousExperience = "Rewatch, Microsoft, Azure, Python, SQL, Vue.js."
+            //    },
+            //    new CV
+            //    {
+            //        CVID = 4,
+            //        Header = "Oskars CV",
+            //        Content = "Hej! Jag heter Oskar och är född 1997. Jag trivs med att arbeta med detaljer och analysera problem.",
+            //        Competence = "Analytisk, strukturerad, lösningsorienterad.",
+            //        Education = "Lunds Universitet Civilingenjör Informationsteknik",
+            //        PreviousExperience = "Hemköp, Rewatch, Java, Docker, Kubernetes, MySQL, PHP."
+            //    },
+            //    new CV
+            //    {
+            //        CVID = 5,
+            //        Header = "Olivers CV",
+            //        Content = "Hej! Jag heter Oliver och är född 2000. Jag brinner för ny teknik och att bygga intuitiva användarupplevelser.",
+            //        Competence = "Innovativ, användarcentrerad, flexibel.",
+            //        Education = "KTH Kungliga Tekniska Högskolan Datateknik",
+            //        PreviousExperience = "NetOnNet, MediaMarkt, Kotlin, Swift, Figma, UX/UI Design."
+            //    }
 
 
-                );
+            //    );
 
             //modelBuilder.Entity<User>().HasData(
             //    new User

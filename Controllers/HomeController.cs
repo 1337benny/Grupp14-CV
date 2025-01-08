@@ -21,6 +21,7 @@ namespace Grupp14_CV.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var randomCVList = users.CVs
+                    .Where(user => user.Users.UserName != User.Identity.Name)
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                 .Take(5) // Hämta de första 5
                 .ToList();

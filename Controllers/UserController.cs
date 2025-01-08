@@ -23,7 +23,9 @@ namespace Grupp14_CV.Controllers
             }
 
             var results = users.Users
-                .Where(u => u.Firstname.StartsWith(query) || u.Lastname.StartsWith(query))
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name 
+                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name 
+                )
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
 
