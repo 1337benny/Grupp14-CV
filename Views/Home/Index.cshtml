@@ -1,8 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<CV>
+
+@{
+    ViewData["Title"] = "Startsida";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Välkomna värdiga medlemmar av grupp14!</h1>
+    <h1 class="display-4">Välkommen</h1>
+
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Finns inga CV</p>
+}
+else
+{
+    @foreach (CV cV in Model)
+    {
+        <div class="border border-dark">
+            <label>Användare: </label>
+            @if (cV.Users != null)
+            {
+                <p>@cV.Users.Firstname @(" ") @cV.Users.Lastname</p>
+            }
+            else
+            {
+                <p>Ingen användare kopplad</p>
+            }
+            <br />
+            <label>Titel: </label>
+            <p>@cV.Header</p>
+        </div>
+    }
+}
+
+
+@* @if (Model == null)
+{
+   <p>FInns inga CV</p> 
+}
+else
+{
+    @foreach (CV cV in Model)
+    {
+        <div class="border border-dark">
+            <label>Användare: </label>
+            <p>@cV.Users.Firstname @(" ") @cV.Users.Lastname</p>
+            <br />
+            <label>Titel: </label>
+            <p>@cV.Header</p>
+            <br />
+            <label>Titel: </label>
+            <p>@cV.Header</p>
+
+        </div>
+    }
+} *@
+
+

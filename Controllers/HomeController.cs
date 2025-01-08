@@ -7,16 +7,38 @@ namespace Grupp14_CV.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private UserContext users;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserContext service)
         {
             _logger = logger;
+            users = service;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                var randomCVList = users.CVs
+                .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
+                .Take(5) // Hämta de första 5
+                .ToList();
+                return View(randomCVList);
+            }
+            else
+            {
+                var randomCVList = users.CVs
+                .Where(cv => cv.Users.PublicSetting == true)
+                .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
+                .Take(5) // Hämta de första 5
+                .ToList();
+
+                return View(randomCVList);
+            }
+            
         }
+
 
         public IActionResult Privacy()
         {
