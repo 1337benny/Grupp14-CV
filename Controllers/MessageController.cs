@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Grupp14_CV.Controllers
 {
@@ -15,18 +17,52 @@ namespace Grupp14_CV.Controllers
             messages = service;
         }
 
-		//[HttpGet]
-		//public IActionResult AllMessages()
-		//{
-		//    var username = User.Identity.Name;
-		//    var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+        //[HttpGet]
+        //public int GetMessageCount()
+        //{
+        //	var username = User.Identity.Name;
+        //	var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
 
-		//    IQueryable<Message> messageList = from message in messages.Messages select message;
+        //	if (logInUser == null)
+        //	{
+        //		return 0;
+        //	}
 
-		//    messageList = messageList.Where(message => message.SenderID == logInUser.Id || message.ReceiverID == logInUser.Id);
-		//    return View(messageList.Distinct().ToList());
-		//}
-		[HttpGet]
+        //	var messageList = messages.Messages
+        //		.Where(message => message.ReceiverID == logInUser.Id && message.IsRead == false)
+        //		.ToList();
+
+        //	int count = 0;
+        //	foreach (var message in messageList)
+        //	{
+        //		count++;
+        //	}
+
+        //	return count;
+        //}
+        [HttpGet]
+        public IActionResult GetMessageCount()
+        {
+            var username = User.Identity.Name;
+            var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+
+            if (logInUser == null)
+            {
+                Debug.WriteLine("ANvändaren hittas ej");
+                return Json(new { count = 0 }); // Returnera JSON även om användaren inte hittades
+            }
+
+            var countMessage = messages.Messages
+                .Count(message => message.ReceiverID == logInUser.Id && message.IsRead == false);
+
+            Debug.WriteLine("Antalet meddelanden: " + countMessage);
+
+            return Json(new { count = countMessage }); // Returnera JSON med räknat antal
+        }
+
+
+
+        [HttpGet]
 		public IActionResult AllMessages()
 		{
 			var username = User.Identity.Name;
@@ -126,6 +162,23 @@ namespace Grupp14_CV.Controllers
 
 
 			return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
+
+		}
+
+		[HttpPost]
+		public IActionResult ReadMessage(int messageID)
+		{
+			IQueryable<Message> messageList = from m in messages.Messages select m;
+			messageList = messageList.Where(m => m.MessageID == messageID);
+			Message message = messageList.FirstOrDefault();
+
+			message.IsRead = true;
+
+			messages.Update(message);
+			messages.SaveChanges();
+
+
+			return RedirectToAction("Conversation", new { senderID = message.SenderID, recieverID = message.ReceiverID });
 
 		}
 	}

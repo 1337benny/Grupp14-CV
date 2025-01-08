@@ -26,7 +26,19 @@
                 <td>@project.user.Firstname @project.user.Lastname</td>
                 <td>
                 @foreach (var uip in project.UsersInProject){
-                        @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            @if (uip.User.PublicSetting == true)
+                            {
+                                @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
+                            }
+                        }
+                        else
+                        {
+                            @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
+                        }
+
+
                 }
 
                 </td>

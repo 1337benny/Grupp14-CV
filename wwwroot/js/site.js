@@ -101,3 +101,90 @@ function searchUsers() {
         });
 }
 
+//Skrollar till botten i konversation meddelande
+document.addEventListener("DOMContentLoaded", function () {
+    var container = document.getElementById("messageContainer");
+    setTimeout(function () {
+        container.scrollTop = container.scrollHeight;
+    }, 500); // Kör efter att innehållet är klart.
+});
+
+
+//Sätter medelande notifikation
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch('/Message/GetMessageCount')
+        .then(response => response.json())
+        .then(data => {
+            const count = data.count; // Hämta count från JSON-objektet
+            const messageNotification = document.getElementById('messageNotification');
+
+            if (count >= 0) {
+                messageNotification.textContent = count;
+                messageNotification.style.display = 'inline-block'; // Visa notisen
+            } else {
+                messageNotification.style.display = 'none'; // Dölj notisen om inga meddelanden
+            }
+        })
+        .catch(error => console.error('Error fetching message count:', error));
+});
+
+
+//fetch('/Message/GetMessageCount')
+//    .then(response => response.json())
+//    .then(data => {
+//        const count = data.count; // Hämta count från JSON-objektet
+//        const messageNotification = document.getElementById('messageNotification');
+//        if (count > 0) {
+//            messageNotification.textContent = count;
+//        } else {
+//            messageNotification.style.display = 'none';
+//        }
+//    })
+//    .catch(error => console.error('Error fetching message count:', error));
+
+//fetch('/Message/GetMessageCount')
+//    .then(response => response.json())
+//    .then(data => {
+//        const count = data.count; // Anpassa efter det faktiska svaret
+//        const messageNotification = document.getElementById('messageNotification');
+//        if (count > 0) {
+//            messageNotification.textContent = count;
+//        } else {
+//            messageNotification.style.display = 'none';
+//        }
+//    });
+
+
+//const numberOfMessages = document.getElementById("messageNotification");
+//fetch(`/Messages/Search?query=${encodeURIComponent(
+//    messages.Messages
+//        .Where(m => m. || u.Lastname.StartsWith(query))
+//        .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
+//        .ToList();
+
+//)}`)
+//    .then(response => response.json())
+//    .then(data => {
+//        resultsContainer.innerHTML = ""; // Rensa tidigare resultat
+
+//        // Rendera nya resultat
+//        data.results.forEach(user => {
+//            const userElement = document.createElement("li");
+//            userElement.classList.add("searchLi");
+//            userElement.textContent = user;
+
+//            // Lägg till klickhändelse på varje namn
+//            userElement.addEventListener("click", () => {
+//                searchInput.value = user; // Sätt input-fältet till användarens namn
+//                resultsContainer.innerHTML = ""; // Rensa sökresultat
+//                resultsContainer.classList.remove("searchCss"); // Ta bort CSS-klassen
+//            });
+
+//            resultsContainer.appendChild(userElement);
+//        });
+//    })
+//    .catch(error => {
+//        console.error("Ett fel uppstod:", error);
+//    });
+
