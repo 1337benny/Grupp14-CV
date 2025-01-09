@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -172,48 +173,72 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUser(string userFirstname, string userLastname, DateOnly userBirthDay, bool userPrivacy)
+        public IActionResult UpdateUser(User newUser)
         {
             //Hämtar ut alla users som stämmer in på vilkoret
             IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
 
             //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
             User updatedUser = userList.FirstOrDefault();
-            updatedUser.Firstname = userFirstname;
-            updatedUser.Lastname = userLastname;
-            updatedUser.BirthDay = userBirthDay;
-            updatedUser.PublicSetting = userPrivacy;
 
-            //Sparar och uppdaterar databasen
-            users.Update(updatedUser);
-            users.SaveChanges();
+            if (ModelState.IsValid)
+            {
 
-            return RedirectToAction("Profile");
+                updatedUser.Firstname = newUser.Firstname;
+                updatedUser.Lastname = newUser.Lastname;
+                updatedUser.BirthDay = newUser.BirthDay;
+                updatedUser.PublicSetting = newUser.PublicSetting;
+
+
+                //Sparar och uppdaterar databasen
+                users.Update(updatedUser);
+                users.SaveChanges();
+
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                EditProfileViewModel viewModel = new EditProfileViewModel
+                {
+                    User = updatedUser,
+                    CV = updatedUser.CV
+                };
+
+                return View("EditProfile", viewModel);
+            }
         }
 
         [HttpPost]
-        public IActionResult CreateCV(string cvHeader, string cvContent, string cvCompetence, string cvEducation, string cvPreviousExperience)
+        public IActionResult CreateCV(CV cv)
         {
-            //Skapar ett nytt CV objekt med propertys från formuläret
-            CV cv = new CV();
-            cv.Header = cvHeader;
-            cv.Content = cvContent;
-            cv.Competence = cvCompetence;
-            cv.Education = cvEducation;
-            cv.PreviousExperience = cvPreviousExperience;
-
-            //Lägger till cv i databasen och sparar
-            users.Add(cv);
-            users.SaveChanges();
-
-            //Hämtar ut den inloggade användaren. Sätter sedan värdet på foreign-key till det nya cv't!
             IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
             User updatedUser = userList.FirstOrDefault();
-            updatedUser.CVID = cv.CVID;
-            users.Update(updatedUser);
-            users.SaveChanges();
+            if (ModelState.IsValid)
+            {
 
-            return RedirectToAction("Profile");
+                //Lägger till cv i databasen och sparar
+                users.Add(cv);
+                users.SaveChanges();
+
+                //Hämtar ut den inloggade användaren. Sätter sedan värdet på foreign-key till det nya cv't!
+               
+                updatedUser.CVID = cv.CVID;
+                users.Update(updatedUser);
+                users.SaveChanges();
+
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                // Om validering misslyckas, skicka tillbaka vyn med data
+                EditProfileViewModel viewModel = new EditProfileViewModel
+                {
+                    User = updatedUser,
+                    CV = cv
+                };
+
+                return View("EditProfile", viewModel);
+            }
         }
 
         [HttpPost]

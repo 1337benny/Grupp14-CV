@@ -9,16 +9,16 @@
 <div class="border border-dark">
 <form asp-action="UpdateUser" method="post">
     <label>Förnamn: </label>
-    <input name="userFirstname" asp-for="User.Firstname" />
+    <input asp-for="User.Firstname" />
     <br />
     <label>Efternamn: </label>
-    <input name="userLastname" asp-for="User.Lastname" />
+    <input asp-for="User.Lastname" />
     <br />
     <label>Födelsedatum: </label>
-    <input name="userBirthDay" type="date" asp-for="User.BirthDay" />
+    <input type="date" asp-for="User.BirthDay" />
     <br />
     <label>Privat/Offentlig: </label>
-    <select name="userPrivacy" asp-for="User.PublicSetting">
+    <select asp-for="User.PublicSetting">
         <option value="true">Offentlig</option>
         <option value="false">Privat</option>
     </select>
@@ -29,14 +29,7 @@
 <h1>Ändra profilbild:</h1>
 
 <div class="border border-dark">
-    @* <form asp-action="UpdateUserProfilePicture" method="post">
-        <div class="border border-dark" style="width: 100px; height: 100px;">
-            <img src="#" alt="Alternate Text" />
-        </div>
-        <input type="file" name="imgFile" />
-        
-        <button type="submit">Spara</button>
-    </form> *@
+    
     <form asp-action="UpdateUserProfilePicture" method="post" enctype="multipart/form-data">
         <input type="file" name="imgFile" accept="image/*" />
         <button type="submit">Ladda upp</button>
@@ -48,19 +41,19 @@
     <div class="border border-dark">
         <form asp-action="CreateCV" method="post">
             <label>Titel: </label>
-            <input name="cvHeader" @* asp-for="Header" *@ />
+            <input asp-for="CV.Header" />
             <br />
             <label>Om mig: </label>
-            <input name="cvContent" @* asp-for="Content" *@ />
+            <input asp-for="CV.Content" />
             <br />
             <label>Kompetenser: </label>
-            <input name="cvCompetence" @* asp-for="Competence" *@ />
+            <input asp-for="CV.Competence" />
             <br />
             <label>Utbildning: </label>
-            <input name="cvEducation" @* asp-for="Education" *@ />
+            <input asp-for="CV.Education" />
             <br />
             <label>Tidigare erfarenhet: </label>
-            <input name="cvPreviousExperience" @* asp-for="PreviousExperience" *@ />
+            <input asp-for="CV.PreviousExperience" />
             <br />
             <button type="submit">Spara</button>
         </form>

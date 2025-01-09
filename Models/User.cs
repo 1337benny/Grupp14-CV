@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,13 +13,13 @@ namespace Grupp14_CV.Models
             
         }
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte förnamn tomt.")]
         [RegularExpression(@"^[\p{L}\s]+$")]
         [StringLength(50)]
         public string Firstname { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte efternamn tomt.")]
         [RegularExpression(@"^[\p{L}\s]+$")]
         [StringLength(50)]
         public string Lastname { get; set; }
@@ -26,7 +27,7 @@ namespace Grupp14_CV.Models
         
         public bool PublicSetting { get; set; } = true;
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte datum tomt.")]
         public DateOnly BirthDay { get; set; }
 
         public string? ProfilePicturePath { get; set; } = "/images/4a7de5d7-70f5-4a2a-9ef1-f691e98a4c38.jpeg";
@@ -35,6 +36,7 @@ namespace Grupp14_CV.Models
         public int? CVID { get; set; }
 
         [ForeignKey(nameof(CVID))]
+        [ValidateNever]
         public virtual CV CV { get; set; }
 
         public virtual IEnumerable<Message> SentMessages { get; set; } = new List<Message>();
