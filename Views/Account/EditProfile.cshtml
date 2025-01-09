@@ -18,9 +18,9 @@
     <input type="date" name="birthday" asp-for="User.BirthDay" />
     <br />
     <label>Privat/Offentlig: </label>
-    <select asp-for="User.PublicSetting">
-        <option name="privacy" value="true">Offentlig</option>
-        <option name="privacy" value="false">Privat</option>
+    <select name="privacy" asp-for="User.PublicSetting">
+        <option value="true">Offentlig</option>
+        <option value="false">Privat</option>
     </select>
     <br />
     <button type="submit">Spara</button>

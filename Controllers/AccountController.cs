@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -303,48 +304,65 @@ namespace Grupp14_CV.Controllers
         [HttpPost]
         public async Task <IActionResult> UpdateUserPassword(string oldPassword, string newPassword, string confirmPassword)
         {
-            
-            //Hämtar ut alla users som stämmer in på vilkoret
-            IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
+            IQueryable<User> list = from user in users.Users where user.UserName == User.Identity.Name select user;
+            User logUser = list.FirstOrDefault();
 
-            //Sparar resultatet i ett User objekt 
-            User updatedUser = userList.FirstOrDefault();
-
-            //Uppdaterar användarens lösenord
-            try
+            EditProfileViewModel viewModel = new EditProfileViewModel
             {
-               await userManager.ChangePasswordAsync(updatedUser, oldPassword, newPassword);
-                Debug.WriteLine("Lösenordet ändrat till " + newPassword);
-            }
-            catch (Exception ex) {
-                Debug.WriteLine("felmeddelande: " + ex.Message);
-            }
-           
+                User = logUser,
+                CV = logUser.CV
+            };
 
-            return RedirectToAction("Profile");
+            //Kollar om alla fält är ifyllda
+            if (ModelState.IsValid)
+            {
+                //Om kontrollen av det nya lösenordet inte stämmer, avbryt.
+                if (!newPassword.Equals(confirmPassword))
+                {
+                    ModelState.AddModelError("Losenord", "Det nya lösenordet matchar inte.");
+                    return View("EditProfile", viewModel);
+                }
+
+                //Försök att ändra lösenord
+                var result = await userManager.ChangePasswordAsync(logUser, oldPassword, newPassword);
+                
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Profile");
+                }
+                
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        //Om error är att det gamla lösenordet inte stämmer med databasen
+                        if (error.Code == "PasswordMismatch")
+                        {
+                            ModelState.AddModelError("Losenord", "Det gamla lösenordet är inte korrekt. Lösenordet har inte ändrats.");
+                            return View("EditProfile", viewModel);
+                        }
+
+                    }
+                    //Skriv ut "regex" för lösenordets krav.
+                    ModelState.AddModelError("", "Lösenordet måste innehålla:");
+                    ModelState.AddModelError("", "Minst 6 tecken långt");
+                    ModelState.AddModelError("", "Bokstav, stor och liten");
+                    ModelState.AddModelError("", "Tecken (ex: !%&=?)");
+                    return View("EditProfile", viewModel);
+
+                }
+
+                
+            }
+            else
+            {
+                //Skickar tillbaka vilka fält som glömts
+                return View("EditProfile", viewModel);
+            }
+
+            
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> UpdateUserProfilePicture(string imgFile)
-        //{
-
-        //    //Hämtar ut alla users som stämmer in på vilkoret
-        //    IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
-
-        //    //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
-        //    User updatedUser = userList.FirstOrDefault();
-
-        //    updatedUser.ProfilePicturePath = imgFile;
-
-
-
-        //    users.Update(updatedUser);
-        //    users.SaveChanges();
-
-
-
-        //    return RedirectToAction("Profile");
-        //}
 
         [HttpPost]
         public async Task<IActionResult> UpdateUserProfilePicture(IFormFile imgFile)
