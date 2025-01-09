@@ -173,7 +173,7 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUser(User newUser)
+        public IActionResult UpdateUser(User newUser, string lastname, string firstname, DateOnly birthday, bool privacy)
         {
             //Hämtar ut alla users som stämmer in på vilkoret
             IQueryable<User> userList = from user in users.Users where user.UserName == User.Identity.Name select user;
@@ -181,13 +181,21 @@ namespace Grupp14_CV.Controllers
             //Sparar resultatet i ett User objekt och sätter de nya uppgifterna
             User updatedUser = userList.FirstOrDefault();
 
+            if (updatedUser == null)
+            {
+                return NotFound(); // Hantera om användaren inte hittas
+            }
+
+            // Ta bort validering för vissa fält om det behövs
+            ModelState.Remove("CV");
+
             if (ModelState.IsValid)
             {
 
                 updatedUser.Firstname = newUser.Firstname;
                 updatedUser.Lastname = newUser.Lastname;
                 updatedUser.BirthDay = newUser.BirthDay;
-                updatedUser.PublicSetting = newUser.PublicSetting;
+                updatedUser.PublicSetting = privacy;
 
 
                 //Sparar och uppdaterar databasen

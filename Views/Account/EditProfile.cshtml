@@ -9,22 +9,24 @@
 <div class="border border-dark">
 <form asp-action="UpdateUser" method="post">
     <label>Förnamn: </label>
-    <input asp-for="User.Firstname" />
+    <input type="text" name="firstname" asp-for="User.Firstname" />
     <br />
     <label>Efternamn: </label>
-    <input asp-for="User.Lastname" />
+    <input type="text" name="lastname" asp-for="User.Lastname" />
     <br />
     <label>Födelsedatum: </label>
-    <input type="date" asp-for="User.BirthDay" />
+    <input type="date" name="birthday" asp-for="User.BirthDay" />
     <br />
     <label>Privat/Offentlig: </label>
     <select asp-for="User.PublicSetting">
-        <option value="true">Offentlig</option>
-        <option value="false">Privat</option>
+        <option name="privacy" value="true">Offentlig</option>
+        <option name="privacy" value="false">Privat</option>
     </select>
     <br />
     <button type="submit">Spara</button>
 </form>
+    
+
 </div>
 <h1>Ändra profilbild:</h1>
 
