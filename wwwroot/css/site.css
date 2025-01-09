@@ -51,5 +51,14 @@ textarea{
 
 .overflow-scroll {
     
-    scroll
+    scroll-behavior: smooth;
 }
+
+a:hover{
+    cursor: pointer;
+}
+
+.hoverPointer:hover{
+    cursor: pointer;
+}
+
