@@ -23,9 +23,9 @@ namespace Grupp14_CV.Controllers
             }
 
             var results = users.Users
-                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name 
-                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name 
-                )
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@")
+                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@")
+				)
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
 
@@ -44,9 +44,9 @@ namespace Grupp14_CV.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var results = users.Users
-                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name
-                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name
-                )
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@")
+				|| u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@")
+				)
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
 
@@ -55,9 +55,9 @@ namespace Grupp14_CV.Controllers
             else
             {
                 var results = users.Users
-                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true
-                || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true
-                )
+                .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true && u.UserName.Contains("@")
+				|| u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true && u.UserName.Contains("@")
+				)
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
 

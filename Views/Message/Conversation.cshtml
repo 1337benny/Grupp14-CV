@@ -2,6 +2,7 @@
 
 @{
 	string reciever = "";
+	bool isRealUser = false;
 }
 
 <div id="messagesContainer" class="border border-dark border-3 overflow-scroll" style="max-height: 400px; max-width: 700px;">
@@ -28,6 +29,11 @@
 		</div>
 		<br />
 
+		if (message.SendUser.UserName.Contains("@"))
+		{
+			isRealUser = true;
+		}
+
 		if (message.SendUser.UserName.Equals(User.Identity.Name))
 		{
 			reciever = message.ReceiverID;
@@ -41,11 +47,21 @@
 
     
 	</div>
-<form asp-action="SendMessage" asp-route-recieverID="@reciever" method="post">
-
-	<label>Meddelande</label>
-	<br />
-	<input type="text" style="height:100px; width:500px" name="content" value="" />
 	
-	<button type="submit">Skicka</button>
-</form>
+@if (isRealUser)
+{
+	<form asp-action="SendMessage" asp-route-recieverID="@reciever" method="post">
+
+		<label>Meddelande</label>
+		<br />
+		<input type="text" style="height:100px; width:500px" name="content" value="" />
+
+		<button type="submit">Skicka</button>
+	</form>
+}
+else
+{
+
+	<p>Detta meddelande kommer från en användare utan konto.</p>
+	<p>Du kan inte svara på meddelandet.</p>
+}

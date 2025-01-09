@@ -1,20 +1,24 @@
-﻿@model User
+﻿@* @model User *@
+@model EditProfileViewModel
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
 
 <h1>Redigera profilen:</h1>
 
 <div class="border border-dark">
 <form asp-action="UpdateUser" method="post">
     <label>Förnamn: </label>
-    <input name="userFirstname" asp-for="Firstname" />
+    <input name="userFirstname" asp-for="User.Firstname" />
     <br />
     <label>Efternamn: </label>
-    <input name="userLastname" asp-for="Lastname" />
+    <input name="userLastname" asp-for="User.Lastname" />
     <br />
     <label>Födelsedatum: </label>
-    <input name="userBirthDay" type="date" asp-for="BirthDay" />
+    <input name="userBirthDay" type="date" asp-for="User.BirthDay" />
     <br />
     <label>Privat/Offentlig: </label>
-    <select name="userPrivacy" asp-for="PublicSetting">
+    <select name="userPrivacy" asp-for="User.PublicSetting">
         <option value="true">Offentlig</option>
         <option value="false">Privat</option>
     </select>
@@ -40,7 +44,7 @@
 
 </div>
 <h1>Mitt CV: </h1>
-@if (Model.CVID == null || string.IsNullOrEmpty(Model.CVID.ToString())){
+@if (Model.User.CVID == null || string.IsNullOrEmpty(Model.User.CVID.ToString())){
     <div class="border border-dark">
         <form asp-action="CreateCV" method="post">
             <label>Titel: </label>
@@ -65,21 +69,24 @@
     <div class="border border-dark">
         <form asp-action="UpdateCV" method="post">
             <label>Titel: </label>
-            <input name="cvHeader" asp-for="CV.Header" />
+            <input asp-for="CV.Header" />
+            @* <input name="cvHeader" asp-for="CV.Header" /> *@
             <br />
             <label>Om mig: </label>
-            <input name="cvContent" asp-for="CV.Content" />
+            <input asp-for="CV.Content" />
             <br />
             <label>Kompetenser: </label>
-            <input name="cvCompetence" asp-for="CV.Competence" />
+            <input asp-for="CV.Competence" />
             <br />
             <label>Utbildning: </label>
-            <input name="cvEducation" asp-for="CV.Education" />
+            <input asp-for="CV.Education" />
             <br />
             <label>Tidigare erfarenhet: </label>
-            <input name="cvPreviousExperience" asp-for="CV.PreviousExperience" />
+            <input  asp-for="CV.PreviousExperience" />
             <br />
-            <input type="hidden" name="cvID" value="@Model.CVID" />
+            <input type="hidden" value="@Model.CV.CVID" asp-for="CV.CVID" />
+            @* <input type="hidden" value="@Model.User" asp-for="CV.Users" /> *@
+            
             <br />
             <button type="submit">Spara</button>
         </form>
@@ -87,11 +94,11 @@
 }
 <h1>Mina projekt:</h1>
 <div class="border border-dark">
-@foreach(var uip in Model.UsersInProject)
+@foreach(var uip in Model.User.UsersInProject)
 {
             <label>Titel: </label>
             <a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@uip.ProjectID">@uip.Project.Titel</a>
-        @if (Model.Id == uip.Project.CreatorID)
+        @if (Model.User.Id == uip.Project.CreatorID)
         {
             <label>Skapare</label>
         }

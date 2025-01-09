@@ -4,7 +4,12 @@
 @{
     ViewData["Title"] = "Projektsida";
 }
-<a asp-action="AddProject"><button>Skapa nytt projekt</button></a>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-action="AddProject"><button>Skapa nytt projekt</button></a>
+}
+
 
 <table class="table">
     <thead>

@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -162,7 +163,12 @@ namespace Grupp14_CV.Controllers
 
             User theUser = userList.FirstOrDefault();
 
-            return View(theUser);
+
+            EditProfileViewModel viewModel = new EditProfileViewModel();
+            viewModel.User = theUser;
+            viewModel.CV = theUser.CV;
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -211,27 +217,55 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateCV(string cvHeader, string cvContent, string cvCompetence, string cvEducation, string cvPreviousExperience, int cvID)
+        public IActionResult UpdateCV(CV cv)
         {
-            //Plockar ut användarens CV
-            IQueryable<CV> cvList = from cvn in users.CVs where cvn.CVID == cvID select cvn;
-            CV cv = cvList.FirstOrDefault();
-            
-            //Sätter de nya värdena på propertys
-            cv.Header = cvHeader;
-            cv.Content = cvContent;
-            cv.Competence = cvCompetence;
-            cv.Education = cvEducation;
-            cv.PreviousExperience = cvPreviousExperience;
+            // Hämta aktuell användare
+           IQueryable<User> list = from user in users.Users where user.UserName == User.Identity.Name select user;
+            User logUser = list.FirstOrDefault();
 
-            //Uppdaterar databasen med det uppdaterade cv't
-            users.Update(cv);
-            users.SaveChanges();
+            // Sätt Users innan validering
+            cv.Users = logUser;
 
-            
+            // Validera manuellt
+           ModelState.Remove("Users"); // Ta bort Users från den initiala ModelState-valideringen
 
-            return RedirectToAction("Profile");
+            if (ModelState.IsValid)
+            {
+                // Plocka ut användarens CV
+                CV cvDb = users.CVs.FirstOrDefault(c => c.CVID == cv.CVID);
+
+                if (cvDb != null)
+                {
+                    // Uppdatera CV-egenskaper
+                    cvDb.Header = cv.Header;
+                    cvDb.Content = cv.Content;
+                    cvDb.Competence = cv.Competence;
+                    cvDb.Education = cv.Education;
+                    cvDb.PreviousExperience = cv.PreviousExperience;
+
+                    // Sätt användare
+                    cvDb.Users = cv.Users;
+
+                    // Uppdatera databasen
+                    users.Update(cvDb);
+                    users.SaveChanges();
+                }
+
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                // Om validering misslyckas, skicka tillbaka vyn med data
+                EditProfileViewModel viewModel = new EditProfileViewModel
+                {
+                    User = logUser,
+                    CV = cv
+                };
+
+                return View("EditProfile", viewModel);
+            }
         }
+
 
         [HttpPost]
         public async Task <IActionResult> UpdateUserPassword(string oldPassword, string newPassword, string confirmPassword)

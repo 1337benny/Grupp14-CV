@@ -11,7 +11,7 @@
 </div>
 
 <h2>Utvalda CVn:</h2>
-<div class="d-md-inline-flex">
+<div class="d-md-inline-flex text-center ms-3 mx-3">
 @if (Model == null || !Model.Any())
 {
     <p>Finns inga CV</p>
@@ -20,28 +20,28 @@ else
 {
     @foreach (CV cV in Model)
     {
-        <div class="border border-dark" style="width: 220px">
+        <div class="border border-dark mx-3 ms-3" style="width: 220px">
             <img style="width: 200px; height: 200px; border-radius: 50%;" src="@cV.Users.ProfilePicturePath" alt="Alternate Text" />
             <br />
-            <label>Användare: </label>
+            <label style="font-weight: 600;">Användare: </label>
             @if (cV.Users != null)
             {
                 <p>@cV.Users.Firstname @(" ") @cV.Users.Lastname</p>
             }
-           
-            <label>Titel: </label>
+
+                <label style="font-weight: 600;">Titel: </label>
             <p>@cV.Header</p>
-            
-            <label>Innehåll: </label>
+
+                <label style="font-weight: 600;">Innehåll: </label>
             <p>@cV.Content</p>
-            
-            <label>Tidigare erfarenheter: </label>
+
+                <label style="font-weight: 600;">Tidigare erfarenheter: </label>
             <p>@cV.PreviousExperience</p>
-            
-            <label>Utbildning: </label>
+
+                <label style="font-weight: 600;">Utbildning: </label>
             <p>@cV.Education</p>
-            
-            <label>Kompetenser: </label>
+
+                <label style="font-weight: 600;">Kompetenser: </label>
             <p>@cV.Competence</p>
 
                 <a asp-controller="Account" asp-action="OtherProfile" asp-route-searchUser="(@cV.Users.UserName)"><button>Visa profil</button></a>
@@ -51,11 +51,11 @@ else
 }
 </div>
 
-<h2>Senaste projektet: </h2>
+<h2 style="margin-top: 30px;">Senaste projektet: </h2>
 <div>
     @if (Model == null || !Model.Any())
 {
-        <p>Finns inga CV</p>
+        <p style="font-weight: 600;">Finns inga CV</p>
     }
     else
     {
@@ -76,13 +76,13 @@ else
             }
         }
         <div class="border border-dark">
-        <label>Titel: </label>
+            <label style="font-weight: 600;">Titel: </label>
         <p>@latestProject.Titel</p>
-        <label>Beskrivning: </label>
+            <label style="font-weight: 600;">Beskrivning: </label>
         <p>@latestProject.Description</p>
-        <label>Startdatum: </label>
+            <label style="font-weight: 600;">Startdatum: </label>
         <p>@latestProject.StartDate</p>
-        <label>Slutdatum: </label>
+            <label style="font-weight: 600;">Slutdatum: </label>
         <p>@latestProject.EndDate</p>
             <a asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@latestProject.ProjectID"><button>Visa projektet</button></a>
         </div>
