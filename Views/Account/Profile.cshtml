@@ -23,7 +23,7 @@
 
 <div class="d-md-inline-flex">
     
-        <img style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" src="@Model.ProfilePicturePath" alt="Profile picture" />
+        <img style="margin-right: 10px; width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" src="@Model.ProfilePicturePath" alt="Profile picture" />
         
     
     <div>
@@ -78,7 +78,7 @@ else
     <p>Du har inget CV.</p>
 }
 
-<h2>Projekt jag är delaktig i</h2>
+<h2 style="margin-top: 20px;">Projekt jag är delaktig i</h2>
 
 @if (Model.UsersInProject != null)
 {

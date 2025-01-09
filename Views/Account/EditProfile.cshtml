@@ -28,7 +28,7 @@
     
 
 </div>
-<h1>Ändra profilbild:</h1>
+<h1 style="margin-top: 20px;">Ändra profilbild:</h1>
 
 <div class="border border-dark">
     
@@ -38,7 +38,7 @@
     </form>
 
 </div>
-<h1>Mitt CV: </h1>
+<h1 style="margin-top: 20px;">Mitt CV: </h1>
 @if (Model.User.CVID == null || string.IsNullOrEmpty(Model.User.CVID.ToString())){
     <div class="border border-dark">
         <form asp-action="CreateCV" method="post">
@@ -87,7 +87,7 @@
         </form>
     </div>
 }
-<h1>Mina projekt:</h1>
+<h1 style="margin-top: 20px;">Mina projekt:</h1>
 <div class="border border-dark">
 @foreach(var uip in Model.User.UsersInProject)
 {
@@ -105,7 +105,7 @@
                 <br />
 }
 </div>
-<h1>Ändra lösenord:</h1>
+<h1 style="margin-top: 20px;">Ändra lösenord:</h1>
 
 <div class="border border-dark">
     <form asp-action="UpdateUserPassword" method="post">

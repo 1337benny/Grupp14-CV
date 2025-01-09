@@ -10,7 +10,7 @@
     
 </div>
 
-<h2>Utvalda CVn:</h2>
+<h2 class="text-center">Utvalda CVn:</h2>
 <div class="d-md-inline-flex text-center ms-3 mx-3">
 @if (Model == null || !Model.Any())
 {
@@ -51,7 +51,7 @@ else
 }
 </div>
 
-<h2 style="margin-top: 30px;">Senaste projektet: </h2>
+<h2 style="margin-top: 30px; text-align: center;">Senaste projektet: </h2>
 <div>
     @if (Model == null || !Model.Any())
 {
@@ -75,7 +75,7 @@ else
                 
             }
         }
-        <div class="border border-dark">
+        <div class="border border-dark text-center">
             <label style="font-weight: 600;">Titel: </label>
         <p>@latestProject.Titel</p>
             <label style="font-weight: 600;">Beskrivning: </label>
