@@ -54,6 +54,15 @@
             </p>
         }
         <p><span style="font-weight:500">Epost: </span> @Model.UserName</p>
+        <p><span style="font-weight:500">Antal visningar: </span> @Model.ProfileVisitors</p>
+        @if (Model.IsActive)
+        {
+            <p><span style="font-weight:500">Aktiv användare </span> </p>
+        }
+        else
+        {
+            <p><span style="font-weight:500">Inaktiv användare </span> </p>
+        }
     </div>
 </div>
 <div>

@@ -27,14 +27,26 @@
                 @foreach (var uip in @Model.UsersInProject){
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        @if (uip.User.PublicSetting == true)
+                        @if (uip.User.PublicSetting == true && uip.User.IsActive == true)
                         {
                             @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
                         }
+                        @* else if(uip.User.IsActive == true)
+                        {
+                            @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")                            
+                        } *@
                     }
                     else
                     {
-                        @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
+                        if (uip.User.IsActive == false)
+                        {
+
+                        }
+                        else
+                        {
+                            @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
+                        }
+                        
                     }
                 }
 

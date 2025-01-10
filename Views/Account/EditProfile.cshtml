@@ -123,3 +123,19 @@
     </form>
 </div>
 
+<div class="border border-dark">
+    @if (Model.User.IsActive)
+    {
+        <form asp-action="UpdateUserActive" asp-route-active="false" method="post">
+            <button style="color: red;" type="submit">Inaktivera konto</button>
+        </form>
+    }
+    else
+    {
+        <form asp-action="UpdateUserActive" asp-route-active="true" method="post">
+            <button style="color: green;" type="submit">Aktivera konto</button>
+        </form>
+    }
+
+</div>
+

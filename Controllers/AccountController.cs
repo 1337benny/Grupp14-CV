@@ -149,7 +149,18 @@ namespace Grupp14_CV.Controllers
 
             logInUserID = theUser.Id;
 
+            ProfileVisitor(theUser);
+
             return View(theUser);
+        }
+
+        [HttpPost]
+        public void ProfileVisitor(User user)
+        {
+            user.ProfileVisitors = user.ProfileVisitors + 1;
+            users.Update(user);
+            users.SaveChanges();
+            
         }
 
         [HttpGet]
@@ -484,7 +495,26 @@ namespace Grupp14_CV.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult UpdateUserActive(bool active)
+        {
+            IQueryable<User> userList = from user in users.Users select user;
+            userList = userList.Where(user => user.UserName == User.Identity.Name);
+            User theUser = userList.FirstOrDefault();
 
+            if (active)
+            {
+                theUser.IsActive = true;
+            }
+            else
+            {
+                theUser.IsActive = false;
+            }
 
+            users.Update(theUser);
+            users.SaveChanges();
+
+            return RedirectToAction("Profile");
+        }
     }
 }

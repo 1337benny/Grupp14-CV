@@ -32,6 +32,10 @@ namespace Grupp14_CV.Models
 
         public string? ProfilePicturePath { get; set; } = "/images/4a7de5d7-70f5-4a2a-9ef1-f691e98a4c38.jpeg";
 
+        public int ProfileVisitors { get; set; } = 0;
+
+        public bool IsActive { get; set; } = true;
+
 
         public int? CVID { get; set; }
 

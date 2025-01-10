@@ -20,29 +20,7 @@ namespace Grupp14_CV.Controllers
             messages = service;
         }
 
-        //[HttpGet]
-        //public int GetMessageCount()
-        //{
-        //	var username = User.Identity.Name;
-        //	var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
-
-        //	if (logInUser == null)
-        //	{
-        //		return 0;
-        //	}
-
-        //	var messageList = messages.Messages
-        //		.Where(message => message.ReceiverID == logInUser.Id && message.IsRead == false)
-        //		.ToList();
-
-        //	int count = 0;
-        //	foreach (var message in messageList)
-        //	{
-        //		count++;
-        //	}
-
-        //	return count;
-        //}
+       
         [HttpGet]
         public IActionResult GetMessageCount()
         {
@@ -158,20 +136,6 @@ namespace Grupp14_CV.Controllers
 			var username = User.Identity.Name;
 			var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
 
-            //if (!ModelState.IsValid)
-            //{
-            //    if (string.IsNullOrEmpty(content))
-            //    {
-            //        var messageList = messages.Messages
-            //        .Where(message => message.SenderID == logInUser.Id && message.ReceiverID == recieverID ||
-            //          message.ReceiverID == logInUser.Id && message.SenderID == recieverID
-            //        )
-            //        .ToList();
-
-            //        ModelState.AddModelError("Losenord", "Du kan inte skicka ett tomt meddelande.");
-            //        return View("Conversation", messageList);
-            //    }
-            //}
 
 			Message message = new Message();
 			message.Content = content;
@@ -203,68 +167,19 @@ namespace Grupp14_CV.Controllers
 
 		}
 
-        //[HttpPost]
-        //public async Task<IActionResult> SendNewMessageNoUser(RegisterViewModel registerViewModel, string recieverID, string content, string firstName, string lastName)
-        //{
-            
-        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        //    var random = new Random();
-        //    var stringBuilder = new StringBuilder();
-
-        //    for (int i = 0; i < 100; i++)
-        //    {
-        //        stringBuilder.Append(chars[random.Next(chars.Length)]);
-        //    }
-
-        //    string newUserName = stringBuilder.ToString();
-
-        //    User newUser = new User();
-        //    newUser.Firstname = firstName;
-        //    newUser.Lastname = lastName;
-        //    newUser.UserName = newUserName;
-        //    newUser.BirthDay = DateOnly.FromDateTime(DateTime.Now);
-        //    newUser.EmailConfirmed = false;
-
-        //    var result = await userManager.CreateAsync(newUser, "12345Aa!");
-        //    if (result.Succeeded)
-        //    {
-        //        //await signInManager.SignInAsync(newUser, isPersistent: true);
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    else
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            if (error.Code == "DuplicateUserName")
-        //            {
-        //                ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
-        //            }
-        //            else if (error.Code == "PasswordTooShort")
-        //            {
-        //                ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError("", error.Description);
-        //            }
-        //        }
-        //    }
+        [HttpPost]
+        public IActionResult DeleteMessage(int messageID)
+        {
+			IQueryable<Message> messageList = from m in messages.Messages select m;
+			messageList = messageList.Where(m => m.MessageID == messageID);
+			Message message = messageList.FirstOrDefault();
 
 
+			messages.Remove(message);
+			messages.SaveChanges();
 
-        //    Message message = new Message();
-        //    message.Content = content;
-        //    message.ReceiverID = recieverID;
-        //    message.SenderID = newUser.Id;
 
-        //    messages.Add(message);
-        //    messages.SaveChanges();
-
-        //    return RedirectToAction("Index", "Home");
-        //    //return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
-
-        //}
-
-        
+			return RedirectToAction("Conversation", new { senderID = message.SenderID, recieverID = message.ReceiverID });
+		}
     }
 }

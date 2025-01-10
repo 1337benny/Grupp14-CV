@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Grupp14_CV.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grupp14_CV.Controllers
@@ -21,7 +22,7 @@ namespace Grupp14_CV.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var randomCVList = users.CVs
-                    .Where(user => user.Users.UserName != User.Identity.Name)
+                    /*.Where(user => user.Users.IsActive == true*/ /*&& user.Users.UserName != User.Identity.Name*/
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                 .Take(5) // Hämta de första 5
                 .ToList();
@@ -30,7 +31,7 @@ namespace Grupp14_CV.Controllers
             else
             {
                 var randomCVList = users.CVs
-                .Where(cv => cv.Users.PublicSetting == true)
+                //.Where(cv => cv.Users.PublicSetting == true && cv.Users.IsActive == true)
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                 .Take(5) // Hämta de första 5
                 .ToList();
