@@ -23,10 +23,10 @@
                         <li class="px-3">
                             @* <input type="text" name="Sök" value="" /> <button class="btn-secondary">Sök</button> *@
                             <form asp-controller="Account" asp-action="OtherProfile" method="get">
-                            <input type="search"
+                            <input style="width: 300px;" type="search"
                                    name="searchUser"
                                    id="searchInputUser"
-                                   placeholder="Sök användare..."
+                                   placeholder="Sök användare/kompetens..."
                                    oninput="searchUsersGlobal()" />
                                 <button type="submit" id="searchButton" style="display: none;">Visa</button>
 

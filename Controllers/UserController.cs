@@ -25,6 +25,7 @@ namespace Grupp14_CV.Controllers
             var results = users.Users
                 .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@") && u.IsActive == true
                 || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@") && u.IsActive == true
+                
                 )
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
@@ -46,6 +47,7 @@ namespace Grupp14_CV.Controllers
                 var results = users.Users
                 .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@") && u.IsActive == true
                 || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.UserName.Contains("@") && u.IsActive == true
+                || u.CV.Competence.Contains(query) && u.IsActive == true
                 )
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();
@@ -57,6 +59,7 @@ namespace Grupp14_CV.Controllers
                 var results = users.Users
                 .Where(u => u.Firstname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true && u.UserName.Contains("@") && u.IsActive == true
                 || u.Lastname.StartsWith(query) && u.UserName != User.Identity.Name && u.PublicSetting == true && u.UserName.Contains("@") && u.IsActive == true
+                || u.CV.Competence.Contains(query) && u.IsActive == true && u.PublicSetting == true
                 )
                 .Select(u => u.Firstname + " " + u.Lastname + " (" + u.UserName + ")")
                 .ToList();

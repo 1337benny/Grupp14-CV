@@ -1,14 +1,10 @@
 ﻿@model List<User>
 
-	<h1>Användare som liknar dig</h1>
-
+	<h1>Användare i din ålder</h1>
+<div class="d-md-inline-flex text-center ms-3 mx-3">
 @foreach(User user in Model)
 {
-    if (user.UserName == User.Identity.Name)
-    {
-       
-    }
-    else
+    if (user.UserName != User.Identity.Name)
     {
         <div class="border border-dark mx-3 ms-3" style="width: 220px">
             <img style="width: 200px; height: 200px; border-radius: 50%;" src="@user.ProfilePicturePath" alt="Alternate Text" />
@@ -37,6 +33,7 @@
 
         </div>
     }
+   
     
 }
-
+</div>
