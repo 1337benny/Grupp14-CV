@@ -4,7 +4,7 @@
 	string reciever = "";
 	bool isRealUser = false;
 }
-
+<div asp-validation-summary="All" class="text-danger"></div>
 <div id="messagesContainer" class="border border-dark border-3 overflow-scroll" style="max-height: 400px; max-width: 700px;">
 
 	@foreach (Message message in Model)
@@ -54,10 +54,34 @@
 
 		<label>Meddelande</label>
 		<br />
-		<input type="text" style="height:100px; width:500px" name="content" value="" />
+		<input id="messageContent" type="text" style="height:100px; width:500px" name="content" value="" />
 
-		<button type="submit">Skicka</button>
+		<button id="sendMessageButton" type="submit">Skicka</button>
+
+		<script>
+
+			const sendMessageButton = document.getElementById("sendMessageButton");
+			const messageContent = document.getElementById("messageContent");
+			sendMessageButton.style.display = "none";
+			
+
+			messageContent.addEventListener("input", function () {
+
+				const message = messageContent.value.trim();
+				
+				if (message !== "") {
+					sendMessageButton.style.display = "inline-block";
+					
+				} else {
+					sendMessageButton.style.display = "none";
+					
+				}
+			});
+		</script>
+
 	</form>
+
+	
 }
 else
 {

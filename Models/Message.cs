@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,9 +16,9 @@ namespace Grupp14_CV.Models
         public string SenderID { get; set; }
         
         public string ReceiverID { get; set; }
-        
 
-        [Required]
+        
+        [Required(ErrorMessage = "Vänligen fyll i ditt meddelande.")]
         [StringLength(500)]
         [RegularExpression(@"^[\s\S]+$")]
         public string Content { get; set; }

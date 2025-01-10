@@ -132,13 +132,7 @@ namespace Grupp14_CV.Controllers
 
         public IActionResult Conversation(string senderID, string recieverID)
         {
-			//var username = User.Identity.Name;
-			//var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
-
-			//if (logInUser == null)
-			//{
-			//	return NotFound("Användaren hittades inte.");
-			//}
+			
 
 			var messageList = messages.Messages
 				.Where(message => message.SenderID == senderID && message.ReceiverID == recieverID ||
@@ -152,8 +146,24 @@ namespace Grupp14_CV.Controllers
 		[HttpPost]
 		public IActionResult SendMessage(string recieverID, string content)
 		{
+            
 			var username = User.Identity.Name;
 			var logInUser = messages.Users.FirstOrDefault(x => x.UserName == username);
+
+            //if (!ModelState.IsValid)
+            //{
+            //    if (string.IsNullOrEmpty(content))
+            //    {
+            //        var messageList = messages.Messages
+            //        .Where(message => message.SenderID == logInUser.Id && message.ReceiverID == recieverID ||
+            //          message.ReceiverID == logInUser.Id && message.SenderID == recieverID
+            //        )
+            //        .ToList();
+
+            //        ModelState.AddModelError("Losenord", "Du kan inte skicka ett tomt meddelande.");
+            //        return View("Conversation", messageList);
+            //    }
+            //}
 
 			Message message = new Message();
 			message.Content = content;
