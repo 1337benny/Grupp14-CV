@@ -6,43 +6,54 @@
 
 <form asp-action="AddProject" method="post">
     <label>Titel: </label>
-    <input asp-for="Titel" />
+    <input id="addProjectTitle" asp-for="Titel" />
     <br />
     <label>Beskrivning: </label>
-    <input asp-for="Description" />
+    <input id="addProjectDescription" asp-for="Description" />
     <br />
     <label>Startdatum: </label>
-    <input type="date" asp-for="StartDate" />
+    <input id="addProjectStartDate" type="date" asp-for="StartDate" />
     <br />
     <label>Slutdatum: </label>
-    <input type="date" asp-for="EndDate" />
+    <input id="addProjectEndDate" type="date" asp-for="EndDate" />
     <br />
     <input type="hidden" name="CreatorID" value="1" />
     <br />
-    <button type="submit">Lägg till</button>
+    <button id="addProjectButton" type="submit" disabled>Lägg till</button>
 </form>
+
+<script> // script som kontrollerar att alla inputs är ifyllda
+    const titleInput = document.getElementById("addProjectTitle");
+    const descriptionInput = document.getElementById("addProjectDescription");
+    const startDateInput = document.getElementById("addProjectStartDate");
+    const endDateInput = document.getElementById("addProjectEndDate");
+    const addButton = document.getElementById("addProjectButton");
+
+    function validateForm() {
+        const title = titleInput.value.trim();
+        const description = descriptionInput.value.trim();
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+
+        const isTitleValid = title !== "";
+        const isDescriptionValid = description !== "";
+        const isStartDateValid = /^\d{4}-\d{2}-\d{2}$/.test(startDate);
+        const isEndDateValid = /^\d{4}-\d{2}-\d{2}$/.test(endDate);
+        const areDatesValid = isStartDateValid && isEndDateValid && startDate <= endDate;
+
+        addButton.disabled = !(isTitleValid && isDescriptionValid && areDatesValid);
+    }
+
+    titleInput.addEventListener("input", validateForm);
+    descriptionInput.addEventListener("input", validateForm);
+    startDateInput.addEventListener("input", validateForm);
+    endDateInput.addEventListener("input", validateForm);
+</script>
+
 
 <a asp-controller="Project" asp-action="Project">Återgå till projektsidan</a>
 
 
 
 
-@* <form asp-action="AddProject" method="post">
-	<label>Titel: </label>
-	<input asp-for="Titel" />
-	<br />
-	<label>Beskrivning: </label>
-	<input asp-for="Description" />
-	<br />
-	<label>Startdatum: </label>
-	<input type="date" asp-for="StartDate"/>
-	<br />
-	<label>Slutdatum: </label>
-	<input type="date" asp-for="EndDate" />
-	<br />
-	<label>Skapad av: </label>
-	<label asp-for="CreatorID"></label>
-	<button type="submit">Lägg till</button>
-</form>
 
-<a asp-controller="Home" asp-action="Index">Återgå till Hem</a> *@
