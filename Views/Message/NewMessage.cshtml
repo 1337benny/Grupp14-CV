@@ -1,5 +1,5 @@
 ﻿<h1>Nytt meddelande</h1>
-
+<div asp-validation-summary="All" class="text-danger"></div>
 @if (User.Identity.IsAuthenticated)
 {
     <form asp-action="SendNewMessage" method="post">
@@ -15,10 +15,31 @@
             <br />
             <label>Meddelande</label>
             <br />
-            <input type="text" style="height:300px; width:70%" name="content" value="" />
+            <input id="messageContentUser" type="text" style="height:300px; width:70%" name="content" value="" />
             <br />
-            <button type="submit">Skicka</button>
+            <button id="sendMessageButtonUser" type="submit">Skicka</button>
     </form>
+
+    <script>
+
+        const sendMessageButtonUser = document.getElementById("sendMessageButtonUser");
+        const messageContentUser = document.getElementById("messageContentUser");
+        sendMessageButtonUser.style.display = "none";
+
+
+        messageContentUser.addEventListener("input", function () {
+
+            const message = messageContentUser.value.trim();
+
+            if (message !== "") {
+                sendMessageButtonUser.style.display = "inline-block";
+
+            } else {
+                sendMessageButtonUser.style.display = "none";
+
+            }
+        });
+    </script>
 }
 else
 {
@@ -35,18 +56,43 @@ else
             <br />
             <label>Ditt förnamn:</label>
             <br />
-            <input type="text" name="firstName" value="" />
+            <input id="firstnameContent" type="text" name="firstName" value="" />
             <br />
             <label>Ditt efternamn:</label>
             <br />
-            <input type="text" name="lastName" value="" />
+            <input id="lastnameContent" type="text" name="lastName" value="" />
             <br />
             <label>Meddelande</label>
             <br />
-            <input type="text" style="height:300px; width:70%" name="content" value="" />
+            <input id="messageContent" type="text" style="height:300px; width:70%" name="content" value="" />
             <br />
-            <button type="submit">Skicka</button>
+            <button id="sendMessageButton" type="submit">Skicka</button>
     </form>
+
+    <script>
+
+        const sendMessageButton = document.getElementById("sendMessageButton");
+        const messageContent = document.getElementById("messageContent");
+        const lastnameContent = document.getElementById("lastnameContent");
+        const firstnameContent = document.getElementById("firstnameContent");
+        sendMessageButton.style.display = "none";
+
+
+        messageContent.addEventListener("input", function () {
+
+            const message = messageContent.value.trim();
+            const firstname = firstnameContent.value.trim();
+            const lastname = lastnameContent.value.trim();
+
+            if (message !== "" && firstname !== "" && lastname !== "") {
+                sendMessageButton.style.display = "inline-block";
+
+            } else {
+                sendMessageButton.style.display = "none";
+
+            }
+        });
+    </script>
 }
 
 
