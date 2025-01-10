@@ -4,10 +4,7 @@
     bool isUserInProject = Model.UsersInProject.Any(uip => uip.User.UserName == User.Identity.Name);
 }
 
-@{
-    ViewData["Title"] = "Projekt info";
-}
-
+<div asp-validation-summary="All" class="text-danger"></div>
 
 <table class="table">
     <thead>
@@ -54,27 +51,68 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <h2>Redigera projektet: </h2>
-
     <form class="border border-dark" asp-action="EditProject" method="post">
         <label>Titel: </label>
-        <input name="pTitel" asp-for="Titel" />
+        <input id="projectTitle" name="Titel" asp-for="Titel" />
         <br />
         <label>Beskrivning: </label>
-        <input name="pDescription" asp-for="Description" />
+        <input id="projectDescription" name="Description" asp-for="Description" />
         <br />
         <label>Startdatum: </label>
-        <input type="date" name="pStartDate" asp-for="StartDate" />
+        <input id="startDate" name="StartDate" type="date" asp-for="StartDate" />
         <br />
         <label>Slutdatum: </label>
-        <input type="date" name="pEndDate" asp-for="EndDate" />
+        <input id="endDate" name="EndDate" type="date" asp-for="EndDate" />
         <br />
-        <input type="hidden" name="pCreatorID" value="1" />
+        <input name="CreatorID" type="hidden" value="@Model.CreatorID" asp-for="CreatorID" />
         <br />
         <br />
-        <input type="hidden" name="pID" value="@Model.ProjectID" />
+        <input name="ProjectID" type="hidden" value="@Model.ProjectID" asp-for="ProjectID" />
         <br />
-        <button type="submit">Spara ändringar</button>
+        <button id="saveProject" type="submit" disabled>Spara ändringar</button>
     </form>
+
+    //Script som gör att spara-knappen blir ej klickbar om någonting lämnas tomt
+    <script>
+        const titleInput = document.getElementById("projectTitle");
+        const descriptionInput = document.getElementById("projectDescription");
+        const startDateInput = document.getElementById("startDate");
+        const endDateInput = document.getElementById("endDate");
+        const saveButton = document.getElementById("saveProject");
+
+        
+        function isDateValid(dateString) {
+            // Kontrollera om datumet matchar det förväntade formatet (yyyy-mm-dd)
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            return dateRegex.test(dateString);
+        }
+
+        function validateInputs() {
+            // Kontrollera om titel och beskrivning är ifyllda
+            const isTitleValid = titleInput.value.trim() !== "";
+            const isDescriptionValid = descriptionInput.value.trim() !== "";
+            const isStartDateValid = isDateValid(startDateInput.value);
+            const isEndDateValid = isDateValid(endDateInput.value);
+
+            // Aktivera eller inaktivera knappen baserat på valideringen
+            if (isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid) {
+                saveButton.disabled = false;
+            } else {
+                saveButton.disabled = true;
+            }
+        }
+
+        // Lägg till event listeners på alla inputs
+        titleInput.addEventListener("input", validateInputs);
+        descriptionInput.addEventListener("input", validateInputs);
+        startDateInput.addEventListener("input", validateInputs);
+        endDateInput.addEventListener("input", validateInputs);
+
+        // Kör en initial validering när sidan laddas
+        validateInputs();
+    </script>
+
+   
     
 }
 else {
@@ -95,25 +133,7 @@ else
     </form>
 }
 
-    @* foreach (var uip in Model.UsersInProject)
-    {
-        @if (User.Identity.Name == uip.User.UserName){
-            <form asp-controller="Project" asp-action="LeaveProject" method="post">
-                <input type="hidden" name="projectID" value="@Model.ProjectID" />
-                <button type="submit">Gå ur</button>
-            </form>
-            break;
-
-        }
-        else{
-            <form asp-controller="Project" asp-action="JoinProject" method="post">
-                <input type="hidden" name="projectID" value="@Model.ProjectID" />
-                <button type="submit">Gå med</button>
-            </form>
-            break;
-
-        }
-    } *@
+   
 }
 
 

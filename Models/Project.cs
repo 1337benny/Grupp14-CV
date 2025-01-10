@@ -13,19 +13,19 @@ namespace Grupp14_CV.Models
         public int ProjectID { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte titel tomt.")]
         [RegularExpression(@"^[\s\S]+$")]
         [StringLength(50)]
         public string Titel {  get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte beskrivning tomt.")]
         [RegularExpression(@"^[\s\S]+$")]
         [StringLength(300)]
         public string Description { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Vänligen lämna inte startdatum tomt.")]
         public DateOnly StartDate { get; set; }
 
 

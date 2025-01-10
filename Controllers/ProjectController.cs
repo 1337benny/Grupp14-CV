@@ -76,7 +76,7 @@ namespace Grupp14_CV.Controllers
         public IActionResult ProjectInfo(int projectID)
         {
             IQueryable<Project> projectList = from project in projects.Projects where project.ProjectID == projectID select project;
-
+            ViewData["Title"] = "Projekt info";
             return View(projectList.FirstOrDefault());
         }
 
@@ -148,21 +148,32 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProject(string pTitel, string pDescription, DateOnly pStartDate, DateOnly pEndDate, int pID)
+        public IActionResult EditProject(Project project)
         {
-            IQueryable<Project> projectList = from project in projects.Projects where project.ProjectID == pID select project;
+            IQueryable<Project> projectList = from p in projects.Projects where project.ProjectID == p.ProjectID select project;
 
             Project updatedProject = projectList.FirstOrDefault();
-            updatedProject.Titel = pTitel;
-            updatedProject.Description = pDescription;
-            updatedProject.StartDate = pStartDate;
-            updatedProject.EndDate = pEndDate;
             
 
-            projects.Update(updatedProject);
-            projects.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                updatedProject.Titel = project.Titel;
+                updatedProject.Description = project.Description;
+                updatedProject.StartDate = project.StartDate;
+                updatedProject.EndDate = project.EndDate;
 
-            return RedirectToAction("Project", "Project");
+                projects.Update(updatedProject);
+                projects.SaveChanges();
+                return RedirectToAction("Project", "Project");
+            }
+            else
+            {
+                
+                    return View("ProjectInfo", project); // Skicka tillbaka den ursprungliga modellen
+                
+
+            }
+
         }
 
 
