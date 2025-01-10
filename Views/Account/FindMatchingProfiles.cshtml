@@ -1,0 +1,42 @@
+﻿@model List<User>
+
+	<h1>Användare som liknar dig</h1>
+
+@foreach(User user in Model)
+{
+    if (user.UserName == User.Identity.Name)
+    {
+       
+    }
+    else
+    {
+        <div class="border border-dark mx-3 ms-3" style="width: 220px">
+            <img style="width: 200px; height: 200px; border-radius: 50%;" src="@user.ProfilePicturePath" alt="Alternate Text" />
+            <br />
+            <label style="font-weight: 600;">Användare: </label>
+
+            <p>@user.Firstname @(" ") @user.Lastname</p>
+
+
+            <label style="font-weight: 600;">Titel: </label>
+            <p>@user.CV.Header</p>
+
+            <label style="font-weight: 600;">Innehåll: </label>
+            <p>@user.CV.Content</p>
+
+            <label style="font-weight: 600;">Tidigare erfarenheter: </label>
+            <p>@user.CV.PreviousExperience</p>
+
+            <label style="font-weight: 600;">Utbildning: </label>
+            <p>@user.CV.Education</p>
+
+            <label style="font-weight: 600;">Kompetenser: </label>
+            <p>@user.CV.Competence</p>
+
+            <a asp-controller="Account" asp-action="OtherProfile" asp-route-searchUser="(@user.UserName)"><button>Visa profil</button></a>
+
+        </div>
+    }
+    
+}
+

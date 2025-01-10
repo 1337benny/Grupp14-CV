@@ -516,5 +516,17 @@ namespace Grupp14_CV.Controllers
 
             return RedirectToAction("Profile");
         }
+
+        [HttpGet]
+        public IActionResult FindMatchingProfiles(int searchAge)
+        {
+            var randomCVList = users.Users
+               .Where(user => user.BirthDay.Year > searchAge - 5 && user.BirthDay.Year < searchAge + 5)
+               .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
+               .Take(3) // Hämta de första 3
+               .ToList();
+
+            return View(randomCVList);
+        }
     }
 }

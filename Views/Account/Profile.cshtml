@@ -1,6 +1,8 @@
 ﻿@model User
 
-
+<div style="display: flex; justify-content: flex-end;">
+    <a asp-action="FindMatchingProfiles" asp-route-searchAge="@Model.BirthDay.Year"><button>Hitta liknande användare</button></a>
+</div>
 <h1>Min profil - 
     @if (Model.PublicSetting == true)
     {
