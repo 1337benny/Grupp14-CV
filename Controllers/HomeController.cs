@@ -24,7 +24,7 @@ namespace Grupp14_CV.Controllers
                 var randomCVList = users.CVs
                     /*.Where(user => user.Users.IsActive == true*/ /*&& user.Users.UserName != User.Identity.Name*/
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(5) // Hämta de första 5
+                .Take(6) // Hämta de första 5
                 .ToList();
                 return View(randomCVList);
             }
@@ -33,7 +33,7 @@ namespace Grupp14_CV.Controllers
                 var randomCVList = users.CVs
                 //.Where(cv => cv.Users.PublicSetting == true && cv.Users.IsActive == true)
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(5) // Hämta de första 5
+                .Take(6) // Hämta de första 5
                 .ToList();
 
                 return View(randomCVList);
