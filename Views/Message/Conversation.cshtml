@@ -10,7 +10,7 @@
 	@foreach (Message message in Model)
 	{
 		
-		<div class="border border-dark ms-3 mx-3">
+		<div class="border shadow ms-3 mx-3" style="padding: 1rem;">
 		<label class="fw-bold">@message.SendUser.Firstname</label>
 		<br />
 		<textarea style="width: 70%" readonly>@message.Content</textarea>

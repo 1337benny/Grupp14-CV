@@ -10,7 +10,7 @@
     
 </div>
 
-<h2 class="text-center">Utvalda CVn:</h2>
+<h2 class="text-center" style="margin-top: 30px;">Utvalda CVn:</h2>
 <div class="d-md-inline-flex text-center ms-3 mx-3">
 @if (Model == null || !Model.Any())
 {
@@ -58,7 +58,7 @@ else
                     <label style="font-weight: 600;">Kompetenser: </label>
                     <p>@cV.Competence</p>
 
-                    <a asp-controller="Account" asp-action="OtherProfile" asp-route-searchUser="(@cV.Users.UserName)"><button>Visa profil</button></a>
+                    <a asp-controller="Account" asp-action="OtherProfile" asp-route-searchUser="(@cV.Users.UserName)"><button class="btn btn-outline-primary">Visa profil</button></a>
 
                 </div>
             }
@@ -100,7 +100,7 @@ else
         <p>@latestProject.StartDate</p>
             <label style="font-weight: 600;">Slutdatum: </label>
         <p>@latestProject.EndDate</p>
-            <a asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@latestProject.ProjectID"><button>Visa projektet</button></a>
+            <a asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@latestProject.ProjectID"><button class="btn btn-outline-primary">Visa projektet</button></a>
         </div>
     }
 

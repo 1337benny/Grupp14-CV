@@ -5,21 +5,21 @@
 <h2>Lägg till ett nytt projekt: </h2>
 
 <form asp-action="AddProject" method="post">
-    <label>Titel: </label>
+    <label style="margin-top: 15px;">Titel: </label>
     <input id="addProjectTitle" asp-for="Titel" />
     <br />
-    <label>Beskrivning: </label>
+    <label style="margin-top: 15px;">Beskrivning: </label>
     <input id="addProjectDescription" asp-for="Description" />
     <br />
-    <label>Startdatum: </label>
+    <label style="margin-top: 15px;">Startdatum: </label>
     <input id="addProjectStartDate" type="date" asp-for="StartDate" />
     <br />
-    <label>Slutdatum: </label>
+    <label style="margin-top: 15px;">Slutdatum: </label>
     <input id="addProjectEndDate" type="date" asp-for="EndDate" />
     <br />
     <input type="hidden" name="CreatorID" value="1" />
     <br />
-    <button id="addProjectButton" type="submit" disabled>Lägg till</button>
+    <button class="btn btn-primary" style="margin-top: 15px;" id="addProjectButton" type="submit" disabled>Lägg till</button>
 </form>
 
 <script> // script som kontrollerar att alla inputs är ifyllda

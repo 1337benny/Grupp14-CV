@@ -23,53 +23,6 @@
 
 </h1>
 
-@* <div class="d-md-inline-flex">
-    
-        <img style="margin-right: 10px; width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" src="@Model.ProfilePicturePath" alt="Profile picture" />
-    
-    
-    <div>
-        <p><span style="font-weight:500">Namn:</span> @Model.Firstname @Model.Lastname</p>
-        <p>
-            <span style="font-weight:500">Ålder:</span>
-            <span id="age"></span>
-        </p>
-        <p style="display:none;" id="birth-year">@Model.BirthDay</p>
-        @if (Model.PublicSetting == true){
-            <p>
-                <span style="font-weight:500">Åtkomst: </span><span>
-                    Offentlig
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
-                        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z" />
-                    </svg>
-                </span>
-            </p>
-        }
-        else{
-            <p>
-                <span style="font-weight:500">Åtkomst: </span><span>
-                    Privat
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
-                    </svg>
-                </span>
-            </p>
-        }
-        <p><span style="font-weight:500">Epost: </span> @Model.UserName</p>
-        <p><span style="font-weight:500">Antal visningar: </span> @Model.ProfileVisitors</p>
-        @if (Model.IsActive)
-        {
-            <p><span style="font-weight:500">Aktiv användare </span> </p>
-        }
-        else
-        {
-            <p><span style="font-weight:500">Inaktiv användare </span> </p>
-        }
-    </div>
-</div>
-<div>
-    <a asp-action="EditProfile"><button>Redigera profil</button></a>
-</div> *@
 <div class="d-md-flex align-items-start">
     
     <div class="d-flex flex-column align-items-center">
