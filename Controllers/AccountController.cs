@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Serialization;
+using System.IO;
 //using PasswordVerificationResult = Microsoft.AspNet.Identity.PasswordVerificationResult;
 
 namespace Grupp14_CV.Controllers
@@ -527,6 +529,60 @@ namespace Grupp14_CV.Controllers
                .ToList();
 
             return View(randomCVList);
+        }
+
+        [HttpGet]
+        public void DownloadProfile()
+        {
+            IQueryable<User> userList = from user in users.Users select user;
+            userList = userList.Where(user => user.UserName == User.Identity.Name);
+            User downloadUser = userList.FirstOrDefault();
+
+            List<Project> projects = new List<Project>();
+
+            foreach (Users_In_Project uip in downloadUser.UsersInProject)
+            {
+                projects.Add(uip.Project);
+                
+            }
+
+            CV downloadCV = new CV();
+            downloadCV.Header = "Saknas";
+            downloadCV.PreviousExperience = "Saknas";
+            downloadCV.Content = "Saknas";
+            downloadCV.Competence = "Saknas";
+            downloadCV.Education = "Saknas";
+
+            if (downloadUser.CV != null)
+            {
+               downloadCV = downloadUser.CV;
+            }
+
+            User sendUser = new User();
+            sendUser.Firstname = downloadUser.Firstname;
+            sendUser.Lastname = downloadUser.Lastname;
+            sendUser.Email = downloadUser.Email;
+            sendUser.PublicSetting = downloadUser.PublicSetting;
+            sendUser.BirthDay = downloadUser.BirthDay;
+            sendUser.IsActive = downloadUser.IsActive;
+
+
+            DownloadViewModel downloadViewModel = new DownloadViewModel();
+            downloadViewModel.Projects = projects;
+            downloadViewModel.CV = downloadCV;
+            downloadViewModel.User = sendUser;
+
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, "DownloadViewModel.xml");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(DownloadViewModel));
+
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                serializer.Serialize(fileStream, downloadViewModel);
+            }
+
+
         }
     }
 }
