@@ -538,14 +538,6 @@ namespace Grupp14_CV.Controllers
             userList = userList.Where(user => user.UserName == User.Identity.Name);
             User downloadUser = userList.FirstOrDefault();
 
-            List<Project> projects = new List<Project>();
-
-            foreach (Users_In_Project uip in downloadUser.UsersInProject)
-            {
-                projects.Add(uip.Project);
-                
-            }
-
             CV downloadCV = new CV();
             downloadCV.Header = "Saknas";
             downloadCV.PreviousExperience = "Saknas";
@@ -558,19 +550,26 @@ namespace Grupp14_CV.Controllers
                downloadCV = downloadUser.CV;
             }
 
-            User sendUser = new User();
-            sendUser.Firstname = downloadUser.Firstname;
-            sendUser.Lastname = downloadUser.Lastname;
-            sendUser.Email = downloadUser.Email;
-            sendUser.PublicSetting = downloadUser.PublicSetting;
-            sendUser.BirthDay = downloadUser.BirthDay;
-            sendUser.IsActive = downloadUser.IsActive;
-
-
             DownloadViewModel downloadViewModel = new DownloadViewModel();
-            downloadViewModel.Projects = projects;
-            downloadViewModel.CV = downloadCV;
-            downloadViewModel.User = sendUser;
+            downloadViewModel.UserFirstName = downloadUser.Firstname;
+            downloadViewModel.UserLastName = downloadUser.Lastname;
+            downloadViewModel.UserEmail = downloadUser.Email;
+            downloadViewModel.UserBirthDay = downloadUser.BirthDay;
+            downloadViewModel.UserIsActive = downloadUser.IsActive;
+            downloadViewModel.UserPublicSetting = downloadUser.PublicSetting;
+            downloadViewModel.CvHeader = downloadCV.Header;
+            downloadViewModel.CvDescription = downloadCV.Content;
+            downloadViewModel.CvCompetence = downloadCV.Competence;
+            downloadViewModel.CvEducation = downloadCV.Education;
+            downloadViewModel.CvPreviousExperience = downloadCV.PreviousExperience;
+            foreach (Users_In_Project uip in downloadUser.UsersInProject)
+            {
+                downloadViewModel.projects.Add(uip.Project.Titel);
+                downloadViewModel.projects.Add(uip.Project.Description);
+                downloadViewModel.projects.Add(uip.Project.StartDate.ToString());
+                downloadViewModel.projects.Add(uip.Project.EndDate.ToString());
+
+            }
 
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string filePath = Path.Combine(desktopPath, "DownloadViewModel.xml");

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupp14_CV.Models
 {
+    
     public class CV
     {
         public CV() { }

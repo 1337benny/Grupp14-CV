@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Serialization;
 
 namespace Grupp14_CV.Models
 {
+    
     public class Project
     {
         public Project () { }
@@ -40,7 +42,7 @@ namespace Grupp14_CV.Models
         [ForeignKey(nameof(CreatorID))]
         public virtual User? user { get; set; }
 
-
+        
         public virtual IEnumerable<Users_In_Project> UsersInProject { get; set; } = new List<Users_In_Project>();
     }
 }
