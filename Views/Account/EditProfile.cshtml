@@ -6,7 +6,7 @@
 
 <h1>Redigera profilen:</h1>
 
-<div class="border border-dark">
+<div class="border shadow" style="padding: 1rem;">
 <form asp-action="UpdateUser" method="post">
     <label style="margin-top: 1rem;">Förnamn: </label>
     <input type="text" name="firstname" asp-for="User.Firstname" />
@@ -30,7 +30,7 @@
 </div>
 <h1 style="margin-top: 20px;">Ändra profilbild:</h1>
 
-<div class="border border-dark">
+<div class="border shadow" style="padding: 1rem;">
     
     <form asp-action="UpdateUserProfilePicture" method="post" enctype="multipart/form-data">
         <input type="file" name="imgFile" accept="image/*" />
@@ -40,44 +40,44 @@
 </div>
 <h1 style="margin-top: 20px;">Mitt CV: </h1>
 @if (Model.User.CVID == null || string.IsNullOrEmpty(Model.User.CVID.ToString())){
-    <div class="border border-dark">
+    <div class="border shadow" style="padding: 1rem;">
         <form asp-action="CreateCV" method="post">
             <label style="margin-top: 1rem;">Titel: </label>
-            <input asp-for="CV.Header" />
+            <input style="width: 70%;" asp-for="CV.Header" />
             <br />
             <label style="margin-top: 1rem;">Om mig: </label>
-            <input asp-for="CV.Content" />
+            <input style="width: 70%;" asp-for="CV.Content" />
             <br />
             <label style="margin-top: 1rem;">Kompetenser: </label>
-            <input asp-for="CV.Competence" />
+            <input style="width: 70%;" asp-for="CV.Competence" />
             <br />
             <label style="margin-top: 1rem;">Utbildning: </label>
-            <input asp-for="CV.Education" />
+            <input style="width: 70%;" asp-for="CV.Education" />
             <br />
             <label style="margin-top: 1rem;">Tidigare erfarenhet: </label>
-            <input asp-for="CV.PreviousExperience" />
+            <input style="width: 70%;" asp-for="CV.PreviousExperience" />
             <br />
             <button class="btn btn-primary" style="margin-top: 1rem;" type="submit">Spara</button>
         </form>
     </div>
 } else{
-    <div class="border border-dark">
+    <div class="border shadow" style="padding: 1rem;">
         <form asp-action="UpdateCV" method="post">
             <label style="margin-top: 1rem;">Titel: </label>
-            <input asp-for="CV.Header" />
+            <input style="width: 70%;" asp-for="CV.Header" />
             @* <input name="cvHeader" asp-for="CV.Header" /> *@
             <br />
             <label style="margin-top: 1rem;">Om mig: </label>
-            <input asp-for="CV.Content" />
+            <input style="width: 70%;" asp-for="CV.Content" />
             <br />
             <label style="margin-top: 1rem;">Kompetenser: </label>
-            <input asp-for="CV.Competence" />
+            <input style ="width: 70%;" asp-for="CV.Competence" />
             <br />
             <label style="margin-top: 1rem;">Utbildning: </label>
-            <input asp-for="CV.Education" />
+            <input style="width: 70%;" asp-for="CV.Education" />
             <br />
             <label style="margin-top: 1rem;">Tidigare erfarenhet: </label>
-            <input  asp-for="CV.PreviousExperience" />
+            <input style="width: 70%;" asp-for="CV.PreviousExperience" />
             <br />
             <input type="hidden" value="@Model.CV.CVID" asp-for="CV.CVID" />
             @* <input type="hidden" value="@Model.User" asp-for="CV.Users" /> *@
@@ -88,7 +88,7 @@
     </div>
 }
 <h1 style="margin-top: 20px;">Mina projekt:</h1>
-<div class="border border-dark">
+<div class="border shadow" style="padding: 1rem;">
 @foreach(var uip in Model.User.UsersInProject)
 {
         <label style="margin-top: 1rem;">Titel: </label>
@@ -107,7 +107,7 @@
 </div>
 <h1 style="margin-top: 20px;">Ändra lösenord:</h1>
 
-<div class="border border-dark">
+<div class="border shadow" style="padding: 1rem;">
     <form asp-action="UpdateUserPassword" method="post">
         <label style="margin-top: 1rem;">Gammalt lösenord: </label>
         <input type="password" name="oldPassword" />
