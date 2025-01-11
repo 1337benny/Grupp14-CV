@@ -426,7 +426,7 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendNewMessageNoUser(RegisterViewModel registerViewModel, string search, string content, string firstName, string lastName)
+        public async Task<IActionResult> SendNewMessageNoUser(/*RegisterViewModel registerViewModel,*/ string search, string content, string firstName, string lastName)
         {
             if (ModelState.IsValid)
             {
