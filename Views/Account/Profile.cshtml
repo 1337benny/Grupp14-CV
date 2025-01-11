@@ -1,4 +1,33 @@
 ﻿@model User
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var downloadSuccess = '@ViewBag.DownloadSuccess';
+            if (downloadSuccess === 'True') {
+                var modal = new bootstrap.Modal(document.getElementById('downloadModal'));
+                modal.show();
+            }
+        });
+    </script>
+}
+
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="downloadModalLabel">Nedladdning Klar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Du har laddat ner din profil. XML filen finns på ditt skrivbord.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div style="display: flex; justify-content: flex-end;">
     <a asp-action="FindMatchingProfiles" asp-route-searchAge="@Model.BirthDay.Year"><button class="btn btn-primary">Hitta liknande användare</button></a>

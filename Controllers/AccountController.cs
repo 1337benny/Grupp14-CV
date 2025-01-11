@@ -532,12 +532,14 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpGet]
-        public void DownloadProfile()
+        public IActionResult DownloadProfile()
         {
+            //Hämtar ut den inloggade användaren
             IQueryable<User> userList = from user in users.Users select user;
             userList = userList.Where(user => user.UserName == User.Identity.Name);
             User downloadUser = userList.FirstOrDefault();
 
+            //Skapar ett nytt cv
             CV downloadCV = new CV();
             downloadCV.Header = "Saknas";
             downloadCV.PreviousExperience = "Saknas";
@@ -545,16 +547,17 @@ namespace Grupp14_CV.Controllers
             downloadCV.Competence = "Saknas";
             downloadCV.Education = "Saknas";
 
+            //Om personen har ett cv så använder vi det.
             if (downloadUser.CV != null)
             {
                downloadCV = downloadUser.CV;
             }
-
+            //Lägger till information i alla properties. 
             DownloadViewModel downloadViewModel = new DownloadViewModel();
             downloadViewModel.UserFirstName = downloadUser.Firstname;
             downloadViewModel.UserLastName = downloadUser.Lastname;
             downloadViewModel.UserEmail = downloadUser.Email;
-            downloadViewModel.UserBirthDay = downloadUser.BirthDay;
+            downloadViewModel.UserBirthDay = downloadUser.BirthDay.ToString();
             downloadViewModel.UserIsActive = downloadUser.IsActive;
             downloadViewModel.UserPublicSetting = downloadUser.PublicSetting;
             downloadViewModel.CvHeader = downloadCV.Header;
@@ -570,17 +573,23 @@ namespace Grupp14_CV.Controllers
                 downloadViewModel.projects.Add(uip.Project.EndDate.ToString());
 
             }
-
+            //Hämtar användarens skrivbordsväg och skapar filvägen till xml-filen.
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string filePath = Path.Combine(desktopPath, "DownloadViewModel.xml");
 
+            //Skapar serialiseraren
             XmlSerializer serializer = new XmlSerializer(typeof(DownloadViewModel));
 
+            //Serialiserar objektet!
             using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
             {
                 serializer.Serialize(fileStream, downloadViewModel);
             }
 
+            //Skickar till html att nedladdningen är klar. Så att vi kan skriva ut ett meddelande till användaren
+            ViewBag.DownloadSuccess = true;
+
+            return View("Profile", downloadUser);
 
         }
     }

@@ -10,7 +10,7 @@
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         public string UserEmail { get; set; }
-        public DateOnly UserBirthDay { get; set; }
+        public string UserBirthDay { get; set; }
         public bool UserIsActive { get; set; }
         public bool UserPublicSetting { get; set; }
 
@@ -20,7 +20,7 @@
         public string CvEducation { get; set; }
         public string CvPreviousExperience { get; set; }
 
-        public List<string> projects { get; set;}
+        public List<string> projects { get; set;} = new List<string>();
 
 
     }
