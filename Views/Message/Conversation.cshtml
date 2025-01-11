@@ -13,7 +13,7 @@
 		<div class="border border-dark ms-3 mx-3">
 		<label class="fw-bold">@message.SendUser.Firstname</label>
 		<br />
-		<textarea readonly>@message.Content</textarea>
+		<textarea style="width: 70%" readonly>@message.Content</textarea>
 
 			@if (message.ReceiveUser.UserName.Equals(User.Identity.Name))
 			{
