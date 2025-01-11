@@ -8,22 +8,22 @@
 
 <div class="border border-dark">
 <form asp-action="UpdateUser" method="post">
-    <label>Förnamn: </label>
+    <label style="margin-top: 1rem;">Förnamn: </label>
     <input type="text" name="firstname" asp-for="User.Firstname" />
     <br />
-    <label>Efternamn: </label>
+        <label style="margin-top: 1rem;">Efternamn: </label>
     <input type="text" name="lastname" asp-for="User.Lastname" />
     <br />
-    <label>Födelsedatum: </label>
+        <label style="margin-top: 1rem;">Födelsedatum: </label>
     <input type="date" name="birthday" asp-for="User.BirthDay" />
     <br />
-    <label>Privat/Offentlig: </label>
+        <label style="margin-top: 1rem;">Privat/Offentlig: </label>
     <select name="privacy" asp-for="User.PublicSetting">
         <option value="true">Offentlig</option>
         <option value="false">Privat</option>
     </select>
     <br />
-    <button type="submit">Spara</button>
+        <button class="btn btn-primary" style="margin-top: 1rem;" type="submit">Spara</button>
 </form>
     
 
@@ -34,7 +34,7 @@
     
     <form asp-action="UpdateUserProfilePicture" method="post" enctype="multipart/form-data">
         <input type="file" name="imgFile" accept="image/*" />
-        <button type="submit">Ladda upp</button>
+        <button class="btn btn-primary" type="submit">Ladda upp</button>
     </form>
 
 </div>
@@ -42,48 +42,48 @@
 @if (Model.User.CVID == null || string.IsNullOrEmpty(Model.User.CVID.ToString())){
     <div class="border border-dark">
         <form asp-action="CreateCV" method="post">
-            <label>Titel: </label>
+            <label style="margin-top: 1rem;">Titel: </label>
             <input asp-for="CV.Header" />
             <br />
-            <label>Om mig: </label>
+            <label style="margin-top: 1rem;">Om mig: </label>
             <input asp-for="CV.Content" />
             <br />
-            <label>Kompetenser: </label>
+            <label style="margin-top: 1rem;">Kompetenser: </label>
             <input asp-for="CV.Competence" />
             <br />
-            <label>Utbildning: </label>
+            <label style="margin-top: 1rem;">Utbildning: </label>
             <input asp-for="CV.Education" />
             <br />
-            <label>Tidigare erfarenhet: </label>
+            <label style="margin-top: 1rem;">Tidigare erfarenhet: </label>
             <input asp-for="CV.PreviousExperience" />
             <br />
-            <button type="submit">Spara</button>
+            <button class="btn btn-primary" style="margin-top: 1rem;" type="submit">Spara</button>
         </form>
     </div>
 } else{
     <div class="border border-dark">
         <form asp-action="UpdateCV" method="post">
-            <label>Titel: </label>
+            <label style="margin-top: 1rem;">Titel: </label>
             <input asp-for="CV.Header" />
             @* <input name="cvHeader" asp-for="CV.Header" /> *@
             <br />
-            <label>Om mig: </label>
+            <label style="margin-top: 1rem;">Om mig: </label>
             <input asp-for="CV.Content" />
             <br />
-            <label>Kompetenser: </label>
+            <label style="margin-top: 1rem;">Kompetenser: </label>
             <input asp-for="CV.Competence" />
             <br />
-            <label>Utbildning: </label>
+            <label style="margin-top: 1rem;">Utbildning: </label>
             <input asp-for="CV.Education" />
             <br />
-            <label>Tidigare erfarenhet: </label>
+            <label style="margin-top: 1rem;">Tidigare erfarenhet: </label>
             <input  asp-for="CV.PreviousExperience" />
             <br />
             <input type="hidden" value="@Model.CV.CVID" asp-for="CV.CVID" />
             @* <input type="hidden" value="@Model.User" asp-for="CV.Users" /> *@
             
             <br />
-            <button type="submit">Spara</button>
+            <button class="btn btn-primary" style="margin-top: 1rem;" type="submit">Spara</button>
         </form>
     </div>
 }
@@ -91,7 +91,7 @@
 <div class="border border-dark">
 @foreach(var uip in Model.User.UsersInProject)
 {
-            <label>Titel: </label>
+        <label style="margin-top: 1rem;">Titel: </label>
             <a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@uip.ProjectID">@uip.Project.Titel</a>
         @if (Model.User.Id == uip.Project.CreatorID)
         {
@@ -109,33 +109,33 @@
 
 <div class="border border-dark">
     <form asp-action="UpdateUserPassword" method="post">
-        <label>Gammalt lösenord: </label>
+        <label style="margin-top: 1rem;">Gammalt lösenord: </label>
         <input type="password" name="oldPassword" />
         <br />
-        <label>Nytt lösenord: </label>
+        <label style="margin-top: 1rem;">Nytt lösenord: </label>
         <input type="password" name="newPassword" />
         <br />
-        <label>Upprepa nytt lösenord: </label>
+        <label style="margin-top: 1rem;">Upprepa nytt lösenord: </label>
         <input type="password" name="confirmPassword" />
         <br />
        
-        <button type="submit">Spara</button>
+        <button style="margin-top: 1rem;" class="btn btn-primary" type="submit">Spara</button>
     </form>
 </div>
 
-<div class="border border-dark">
+
     @if (Model.User.IsActive)
     {
         <form asp-action="UpdateUserActive" asp-route-active="false" method="post">
-            <button style="color: red;" type="submit">Inaktivera konto</button>
+            <button style="margin-top: 20px;" class="btn btn-danger" type="submit">Inaktivera konto</button>
         </form>
     }
     else
     {
         <form asp-action="UpdateUserActive" asp-route-active="true" method="post">
-            <button style="color: green;" type="submit">Aktivera konto</button>
+        <button style="margin-top: 20px;" class="btn btn-success" type="submit">Aktivera konto</button>
         </form>
     }
 
-</div>
+
 
