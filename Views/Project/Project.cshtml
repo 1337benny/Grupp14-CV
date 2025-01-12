@@ -7,11 +7,11 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <a asp-action="AddProject"><button class="btn btn-outline-success">Skapa nytt projekt</button></a>
+    <a asp-action="AddProject"><button class="btn btn-outline-success">+ Skapa nytt projekt</button></a>
 }
 
 
-<table class="table">
+@* <table class="table">
     <thead>
     <td>Titel</td>
         <td>Beskrivning</td>
@@ -37,10 +37,7 @@
                             {
                                 @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
                             }
-                            @* else if(uip.User.IsActive == true)
-                {
-                @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
-                } *@
+                            
                         }
                         else
                         {
@@ -62,4 +59,49 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+        <h1 class="text-center">Projekt</h1>
+        <div class="border shadow ms-3 mx-3" style="padding: 2rem;">
+            @foreach (Project proj in Model){
+                <a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@proj.ProjectID">
+                <div class="border shadow ms-3 mx-3" style="padding: 1rem; margin-top: 10px;">
+                <label><span class="fw-bold">Titel: </span>@proj.Titel</label>
+                <br />
+                <label><span class="fw-bold">Beskrivning: </span>@proj.Description</label>
+                <br />
+                <label><span class="fw-bold">Startdatum: </span>@proj.StartDate</label>
+                <br />
+                <label><span class="fw-bold">Slutdatum: </span>@proj.EndDate</label>
+                <br />
+                <label>
+                <span class="fw-bold">Medlemmar: </span>
+                    @foreach (Users_In_Project users_In_Project in proj.UsersInProject){
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        @if (users_In_Project.User.PublicSetting == true && users_In_Project.User.IsActive == true)
+                        {
+                            @users_In_Project.User.Firstname @(" ") @users_In_Project.User.Lastname @(", ")
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (users_In_Project.User.IsActive == false)
+                        {
+
+                        }
+                        else
+                        {
+                            @users_In_Project.User.Firstname @(" ") @users_In_Project.User.Lastname @(", ")
+                        }
+
+                    }
+                    }
+                </label>
+            </div>
+        </a>
+            }
+
+
+
+        </div>
