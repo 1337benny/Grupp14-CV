@@ -1,7 +1,17 @@
 ﻿@model List<User>
 
+@{
+    User checkList = Model.FirstOrDefault();
+}
 	<h1>Användare i din ålder</h1>
-<div class="d-md-inline-flex text-center ms-3 mx-3">
+
+
+@if (checkList == null){
+    <p>Vi kunde inte hitta andra aktiva användare med CV i din ålder.</p>
+}
+else{
+
+    <div class="d-md-inline-flex text-center ms-3 mx-3">
 @foreach(User user in Model)
 {
     if (user.UserName != User.Identity.Name)
@@ -36,4 +46,6 @@
    
     
 }
-</div>
+    </div>
+    }
+

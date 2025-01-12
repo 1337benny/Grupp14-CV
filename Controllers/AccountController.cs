@@ -523,7 +523,7 @@ namespace Grupp14_CV.Controllers
         public IActionResult FindMatchingProfiles(int searchAge)
         {
             var randomCVList = users.Users
-               .Where(user => user.BirthDay.Year > searchAge - 5 && user.BirthDay.Year < searchAge + 5)
+               .Where(user => user.BirthDay.Year > searchAge - 5 && user.BirthDay.Year < searchAge + 5 && user.IsActive == true && user.CV != null)
                .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                .Take(3) // Hämta de första 3
                .ToList();
