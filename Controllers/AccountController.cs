@@ -472,18 +472,18 @@ namespace Grupp14_CV.Controllers
                 {
                     foreach (var error in result.Errors)
                     {
-                        if (error.Code == "DuplicateUserName")
-                        {
-                            ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
-                        }
-                        else if (error.Code == "PasswordTooShort")
-                        {
-                            ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
-                        }
-                        else
-                        {
+                        //if (error.Code == "DuplicateUserName")
+                        //{
+                        //    ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
+                        //}
+                        //else if (error.Code == "PasswordTooShort")
+                        //{
+                        //    ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
+                        //}
+                        //else
+                        //{
                             ModelState.AddModelError("", error.Description);
-                        }
+                        //}
                     }
                 }
 
@@ -575,7 +575,7 @@ namespace Grupp14_CV.Controllers
             }
             //Hämtar användarens skrivbordsväg och skapar filvägen till xml-filen.
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filePath = Path.Combine(desktopPath, "DownloadViewModel.xml");
+            string filePath = Path.Combine(desktopPath, "ProfileInfo.xml");
 
             //Skapar serialiseraren
             XmlSerializer serializer = new XmlSerializer(typeof(DownloadViewModel));

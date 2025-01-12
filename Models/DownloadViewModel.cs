@@ -3,9 +3,6 @@
     [Serializable]
     public class DownloadViewModel
     {
-        //public User User { get; set; }
-        //public List<Project> Projects { get; set; }
-        //public CV CV { get; set; }
 
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }

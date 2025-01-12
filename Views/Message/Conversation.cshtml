@@ -3,8 +3,23 @@
 @{
 	string reciever = "";
 	bool isRealUser = false;
+
+	string otherUser = "";
+
+	foreach (Message message1 in Model){
+		if (message1.SendUser.UserName == User.Identity.Name){
+			otherUser = (message1.ReceiveUser.Firstname + " " + message1.ReceiveUser.Lastname);
+		}
+		else{
+			otherUser = (message1.SendUser.Firstname + " " + message1.SendUser.Lastname);
+		}
+		break;
+	}
+
 }
 <div asp-validation-summary="All" class="text-danger"></div>
+
+<h4>Konversation med @otherUser</h4>
 <div id="messagesContainer" class="border border-dark border-3 overflow-scroll" style="max-height: 400px; max-width: 700px;">
 
 	@foreach (Message message in Model)
@@ -40,28 +55,7 @@
 					</div>
 				</div>
 
-				<script>
-					const modal = document.getElementById("deleteConfirmationModal");
-					const messageIDInput = document.getElementById("modalMessageID");
-
-					window.onload = function() {
-						const messagesContainer = document.getElementById("messagesContainer");
-						messagesContainer.scrollTop = messagesContainer.scrollHeight;
-					}
-
-					// Öppna modalen och ställ in meddelande-ID
-					function openModal(messageID) {
-						messageIDInput.value = messageID;
-						modal.style.display = "flex";
-					}
-
-					// Stäng modalen
-					function closeModal() {
-						modal.style.display = "none";
-					}
-
-					
-				</script>
+				
 
 			}
 			
@@ -86,6 +80,28 @@
 
     
 	</div>
+<script>
+	const modal = document.getElementById("deleteConfirmationModal");
+	const messageIDInput = document.getElementById("modalMessageID");
+
+	window.onload = function() {
+		const messagesContainer = document.getElementById("messagesContainer");
+		messagesContainer.scrollTop = messagesContainer.scrollHeight;
+	}
+
+	// Öppna modalen och ställ in meddelande-ID
+	function openModal(messageID) {
+		messageIDInput.value = messageID;
+		modal.style.display = "flex";
+	}
+
+	// Stäng modalen
+	function closeModal() {
+		modal.style.display = "none";
+	}
+
+
+</script>
 	
 @if (isRealUser)
 {

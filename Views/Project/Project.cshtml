@@ -10,58 +10,8 @@
     <a asp-action="AddProject"><button class="btn btn-outline-success">+ Skapa nytt projekt</button></a>
 }
 
-
-@* <table class="table">
-    <thead>
-    <td>Titel</td>
-        <td>Beskrivning</td>
-        <td>Startdatum</td>
-        <td>Slutdatum</td>
-        <td>Skapad av</td>
-        <td>Deltagare</td>
-    </thead>
-    <tbody>
-        @foreach (var project in Model)
-        {
-            <tr>
-                <td><a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@project.ProjectID">@project.Titel</a></td>
-                <td>@project.Description</td>
-                <td>@project.StartDate</td>
-                <td>@project.EndDate</td>
-                <td>@project.user.Firstname @project.user.Lastname</td>
-                <td>
-                @foreach (var uip in project.UsersInProject){
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            @if (uip.User.PublicSetting == true && uip.User.IsActive == true)
-                            {
-                                @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
-                            }
-                            
-                        }
-                        else
-                        {
-                            if (uip.User.IsActive == false)
-                            {
-
-                            }
-                            else
-                            {
-                                @uip.User.Firstname @(" ") @uip.User.Lastname @(", ")
-                            }
-
-                        }
-
-
-                }
-
-                </td>
-            </tr>
-        }
-    </tbody>
-</table> *@
         <h1 class="text-center">Projekt</h1>
-        <div class="border shadow ms-3 mx-3" style="padding: 2rem;">
+        <div class="ms-3 mx-3" style="padding: 2rem;">
             @foreach (Project proj in Model){
                 <a class="link-id" asp-controller="Project" asp-action="ProjectInfo" asp-route-projectID="@proj.ProjectID">
                 <div class="border shadow ms-3 mx-3" style="padding: 1rem; margin-top: 10px;">

@@ -63,7 +63,7 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <h2>Redigera projektet: </h2>
-    <form class="border border-dark" asp-action="EditProject" method="post">
+    <form class="border border-dark" style="padding: 20px;" asp-action="EditProject" method="post">
         <label>Titel: </label>
         <input id="projectTitle" name="Titel" asp-for="Titel" />
         <br />
@@ -81,7 +81,7 @@
         <br />
         <input name="ProjectID" type="hidden" value="@Model.ProjectID" asp-for="ProjectID" />
         <br />
-        <button id="saveProject" type="submit" disabled>Spara ändringar</button>
+        <button class="btn btn-outline-success" id="saveProject" type="submit" disabled>Spara ändringar</button>
     </form>
 
     //Script som gör att spara-knappen blir ej klickbar om någonting lämnas tomt
@@ -134,14 +134,14 @@ else {
 {
     <form asp-controller="Project" asp-action="LeaveProject" method="post">
         <input type="hidden" name="projectID" value="@Model.ProjectID" />
-        <button type="submit">Gå ur</button>
+        <button class="btn btn-outline-danger" type="submit">Gå ur</button>
     </form>
 }
 else
 {
     <form asp-controller="Project" asp-action="JoinProject" method="post">
         <input type="hidden" name="projectID" value="@Model.ProjectID" />
-        <button type="submit">Gå med</button>
+        <button class="btn btn-outline-primary" type="submit">Gå med</button>
     </form>
 }
 

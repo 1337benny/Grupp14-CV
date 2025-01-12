@@ -117,12 +117,12 @@ function searchUsersGlobal() {
 }
 
 //Skrollar till botten i konversation meddelande
-document.addEventListener("DOMContentLoaded", function () {
-    var container = document.getElementById("messageContainer");
-    setTimeout(function () {
-        container.scrollTop = container.scrollHeight;
-    }, 500); // Kör efter att innehållet är klart.
-});
+//document.addEventListener("DOMContentLoaded", function () {
+//    var container = document.getElementById("messageContainer");
+//    setTimeout(function () {
+//        container.scrollTop = container.scrollHeight;
+//    }, 500); // Kör efter att innehållet är klart.
+//});
 
 
 //Sätter medelande notifikation
