@@ -1,4 +1,4 @@
-﻿@* @model User *@
+﻿
 @model EditProfileViewModel
 
 
@@ -65,7 +65,7 @@
         <form asp-action="UpdateCV" method="post">
             <label style="margin-top: 1rem;">Titel: </label>
             <input style="width: 70%;" asp-for="CV.Header" />
-            @* <input name="cvHeader" asp-for="CV.Header" /> *@
+            
             <br />
             <label style="margin-top: 1rem;">Om mig: </label>
             <input style="width: 70%;" asp-for="CV.Content" />
@@ -80,7 +80,7 @@
             <input style="width: 70%;" asp-for="CV.PreviousExperience" />
             <br />
             <input type="hidden" value="@Model.CV.CVID" asp-for="CV.CVID" />
-            @* <input type="hidden" value="@Model.User" asp-for="CV.Users" /> *@
+            
             
             <br />
             <button class="btn btn-primary" style="margin-top: 1rem;" type="submit">Spara</button>

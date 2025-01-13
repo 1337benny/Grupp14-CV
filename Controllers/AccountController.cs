@@ -1,5 +1,4 @@
 ﻿using Grupp14_CV.Models;
-//using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -11,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
-//using PasswordVerificationResult = Microsoft.AspNet.Identity.PasswordVerificationResult;
+
 
 namespace Grupp14_CV.Controllers
 {
@@ -66,17 +65,15 @@ namespace Grupp14_CV.Controllers
                     {
                         if (error.Code == "DuplicateUserName")
                         {
-                            ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
+                            ModelState.AddModelError("", "E-posten är redan registrerad.");
+                            return View(registerViewModel);
                         }
-                        else if (error.Code == "PasswordTooShort")
-                        {
-                            ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", error.Description);
-                        }
+
                     }
+                    ModelState.AddModelError("", "Lösenordet måste innehålla:");
+                    ModelState.AddModelError("", "Minst 6 tecken långt");
+                    ModelState.AddModelError("", "Bokstav, stor och liten");
+                    ModelState.AddModelError("", "Tecken (ex: !%&=?)");
                 }
             }
             return View(registerViewModel);
@@ -426,7 +423,8 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendNewMessageNoUser(/*RegisterViewModel registerViewModel,*/ string search, string content, string firstName, string lastName)
+        //Metod för att skicka ett meddelande som ej inloggad
+        public async Task<IActionResult> SendNewMessageNoUser(string search, string content, string firstName, string lastName)
         {
             if (ModelState.IsValid)
             {
@@ -437,6 +435,7 @@ namespace Grupp14_CV.Controllers
                 userList = userList.Where(user => user.UserName == email);
                 User theUser = userList.FirstOrDefault();
 
+                //Genererar ett random användarnamn på 100 tecken.
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                 var random = new Random();
                 var stringBuilder = new StringBuilder();
@@ -448,6 +447,7 @@ namespace Grupp14_CV.Controllers
 
                 string newUserName = stringBuilder.ToString();
 
+                //Skapar ett User objekt i databasen så meddelandet kan sparas
                 User newUser = new User();
                 newUser.Firstname = firstName;
                 newUser.Lastname = lastName;
@@ -465,30 +465,19 @@ namespace Grupp14_CV.Controllers
 
                     users.Add(message);
                     users.SaveChanges();
-                    //await signInManager.SignInAsync(newUser, isPersistent: true);
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
-                        //if (error.Code == "DuplicateUserName")
-                        //{
-                        //    ModelState.AddModelError("Epost", "E-posten är redan registrerad.");
-                        //}
-                        //else if (error.Code == "PasswordTooShort")
-                        //{
-                        //    ModelState.AddModelError("Losenord", "Lösenordet är för kort.");
-                        //}
-                        //else
-                        //{
                             ModelState.AddModelError("", error.Description);
-                        //}
                     }
                 }
 
                 return RedirectToAction("Index", "Home");
-                //return RedirectToAction("Conversation", new { senderID = logInUser.Id, recieverID = recieverID });
+                
             }
             else
             {

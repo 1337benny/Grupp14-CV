@@ -22,7 +22,7 @@ namespace Grupp14_CV.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var randomCVList = users.CVs
-                    /*.Where(user => user.Users.IsActive == true*/ /*&& user.Users.UserName != User.Identity.Name*/
+                
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                 .Take(6) // Hämta de första 5
                 .ToList();
@@ -31,7 +31,7 @@ namespace Grupp14_CV.Controllers
             else
             {
                 var randomCVList = users.CVs
-                //.Where(cv => cv.Users.PublicSetting == true && cv.Users.IsActive == true)
+                
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
                 .Take(6) // Hämta de första 5
                 .ToList();

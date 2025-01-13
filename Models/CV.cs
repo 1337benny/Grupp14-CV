@@ -42,7 +42,7 @@ namespace Grupp14_CV.Models
         [ValidateNever]
         public virtual User Users { get; set; }
 
-        //public virtual ICollection<User> Users { get; set; } = new List<User>();
+        
 
 
 

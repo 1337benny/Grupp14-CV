@@ -25,6 +25,7 @@ document.getElementById('age').textContent = age;
 document.getElementById("public-setting").value = "Offentlig", "Privat";
 
 
+//Metod för at söka efter användare när du ska skicka ett meddelande
 function searchUsers() {
     const searchInput = document.getElementById("searchInput");
     const searchQuery = searchInput.value.trim(); // Ta bort eventuella mellanslag
@@ -67,7 +68,7 @@ function searchUsers() {
         });
 }
 
-
+//Metod för att söka efter användares profiler i headern
 function searchUsersGlobal() {
     const searchInput = document.getElementById("searchInputUser");
     const searchQuery = searchInput.value.trim(); // Ta bort eventuella mellanslag
@@ -116,33 +117,24 @@ function searchUsersGlobal() {
         });
 }
 
-//Skrollar till botten i konversation meddelande
+
+
 //document.addEventListener("DOMContentLoaded", function () {
-//    var container = document.getElementById("messageContainer");
-//    setTimeout(function () {
-//        container.scrollTop = container.scrollHeight;
-//    }, 500); // Kör efter att innehållet är klart.
+//    fetch('/Message/GetMessageCount')
+//        .then(response => response.json())
+//        .then(data => {
+//            const count = data.count; // Hämta count från JSON-objektet
+//            const messageNotification = document.getElementById('messageNotification');
+
+//            if (count >= 0) {
+//                messageNotification.textContent = count;
+//                messageNotification.style.display = 'inline-block'; // Visa notisen
+//            } else {
+//                messageNotification.style.display = 'none'; // Dölj notisen om inga meddelanden
+//            }
+//        })
+//        .catch(error => console.error('Error fetching message count:', error));
 //});
-
-
-//Sätter medelande notifikation
-
-document.addEventListener("DOMContentLoaded", function () {
-    fetch('/Message/GetMessageCount')
-        .then(response => response.json())
-        .then(data => {
-            const count = data.count; // Hämta count från JSON-objektet
-            const messageNotification = document.getElementById('messageNotification');
-
-            if (count >= 0) {
-                messageNotification.textContent = count;
-                messageNotification.style.display = 'inline-block'; // Visa notisen
-            } else {
-                messageNotification.style.display = 'none'; // Dölj notisen om inga meddelanden
-            }
-        })
-        .catch(error => console.error('Error fetching message count:', error));
-});
 
 
 

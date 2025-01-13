@@ -22,6 +22,7 @@ namespace Grupp14_CV.Controllers
 
        
         [HttpGet]
+        //Metod som hämtar ut hur många olästa meddelanden den inloggade användaren har
         public IActionResult GetMessageCount()
         {
             var username = User.Identity.Name;
@@ -44,6 +45,7 @@ namespace Grupp14_CV.Controllers
 
 
         [HttpGet]
+        //Metod som hämtar ut alla konversationer användaren är med i
 		public IActionResult AllMessages()
 		{
 			var username = User.Identity.Name;
@@ -78,6 +80,7 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpPost]
+        //Metod för att skicka ett nytt meddelande som inloggad
         public IActionResult SendNewMessage(string search, string content)
         {
             if (ModelState.IsValid)
@@ -109,13 +112,13 @@ namespace Grupp14_CV.Controllers
             }
             else
             {
-                ModelState.AddModelError("Losenord", "Vänligen fyll i mottagare.");
+                ModelState.AddModelError("", "Vänligen fyll i mottagare.");
                 return View("NewMessage");
             }
         }
 
         [HttpGet]
-
+        //Returnerar alla meddelanden mellan två användare
         public IActionResult Conversation(string senderID, string recieverID)
         {
 			
@@ -130,6 +133,7 @@ namespace Grupp14_CV.Controllers
         }
 
 		[HttpPost]
+        //Skicka ett meddelande i konversationen
 		public IActionResult SendMessage(string recieverID, string content)
 		{
             

@@ -14,6 +14,7 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpGet]
+        //Söker efter användare i nytt meddelande
         public JsonResult Search(string query)
         {
             if (string.IsNullOrEmpty(query))
@@ -34,6 +35,7 @@ namespace Grupp14_CV.Controllers
         }
 
         [HttpGet]
+        //Söker efter användare i header. på Förnamn, efternamn och kompetens
         public JsonResult SearchUser(string query)
         {
             if (string.IsNullOrEmpty(query))
