@@ -19,26 +19,26 @@ namespace Grupp14_CV.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
+
             if (User.Identity.IsAuthenticated)
             {
-                var randomCVList = users.CVs
-                
+                var randomCVList = users.Users
+
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(6) // Hämta de första 6
                 .ToList();
                 return View(randomCVList);
             }
             else
             {
-                var randomCVList = users.CVs
-                
+                var randomCVList = users.Users
+
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(6) // Hämta de första 6
                 .ToList();
 
                 return View(randomCVList);
             }
-            
+
         }
 
 
