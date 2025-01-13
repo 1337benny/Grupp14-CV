@@ -24,7 +24,7 @@ namespace Grupp14_CV.Controllers
                 var randomCVList = users.CVs
                 
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(6) // Hämta de första 5
+                .Take(6) // Hämta de första 6
                 .ToList();
                 return View(randomCVList);
             }
@@ -33,7 +33,7 @@ namespace Grupp14_CV.Controllers
                 var randomCVList = users.CVs
                 
                 .OrderBy(c => Guid.NewGuid()) // Slumpa ordningen med hjälp av Guid.NewGuid
-                .Take(6) // Hämta de första 5
+                .Take(6) // Hämta de första 6
                 .ToList();
 
                 return View(randomCVList);

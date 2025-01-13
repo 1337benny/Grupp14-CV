@@ -21,6 +21,13 @@
     }
     else
     {
+        CV firstCV = Model.FirstOrDefault();
+        if (firstCV == null){
+            <p>Finns inga CV att ta del av.</p>
+        }
+        else{
+
+        
         @foreach (CV cV in Model)
         {
             //Vi fick inte sql-queryn att alltid plocka ut 5 CV. Vi löste det genom att plocka ut 6 cv i sql-queryn och sen bara loopa igenom den 5ggr.
@@ -71,6 +78,7 @@
                     </div>
                     loop5ggr++;
                 }
+            }
             }
     }
 }
